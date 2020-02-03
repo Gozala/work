@@ -1,4 +1,10 @@
-# Work Experience
+**Irakli Gozalishvili** _(a.k.a [@gozala](https://github.com/gozala/))_ 
+
+I am an experienced software engineer with particular interest in [local-first software principles][local-first], [peer to peer][p2p] technologies and the end user programing _(slightly biased for [functional paradigm][functional])_.
+
+[Add me to your address book][contact].
+
+----
 
 ## Local First
 
@@ -57,10 +63,6 @@ Trails concept was an attempt to evolve problematic user interface concepts like
 #### Spacial User Interface of the Web
 
 We set out to enhance existing browser workflows such that they felt familiar & more effective. Special user interface with added dimension and pressure sensitive [3D touch][] were applied across all interactions and views to convey rich yet intuitive mental model. [Read full story](https://medium.com/free-code-camp/lossless-web-navigation-spatial-model-37f83438201d)
-
-![](./present-browserhtml.png)
-
-
 
 ## Runtimes / Frameworks
 
@@ -134,3 +136,7 @@ Project replaced [TomTom Home][tomtom-home] desktop application _(Primarily map 
 [firebox]: ./firebox
 [tomtom-home]:http://us.support.tomtom.com/app/answers/detail/a_id/5122/~/installing-tomtom-home
 [tomtom-home-cloud]:./tomtom-home-cloud
+[local-first]:https://www.inkandswitch.com/local-first.html
+[p2p]:https://en.wikipedia.org/wiki/Peer-to-peer
+[functional]:https://en.wikipedia.org/wiki/Functional_programming
+[contact]:./gozala.vcf
