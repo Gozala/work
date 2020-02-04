@@ -19,10 +19,10 @@ Asymmetry of traditional server/client architectures creates a power disbalance.
 
 Identifying gaps of the web platform and filling those in Firefox to bring those technologies was project [libdweb][]. Through collaboration with [IPFS][], [Dat][] and [SSB][] communities missing primitives were recognized, which I have implemented as an experimental Firefox extension APIs. This lead to several successes:
 
-- [IPFS Protocol support in Firefox](./libdweb/ipfs).
-- [Dat protocol support for Firefox](./libdweb/dat) (Compatible with [Beaker][] browser) and [Cliqz][]. 
-- [Cliqz contept mobile browser](./libdweb/dat-mobile) with Dat protocol support.
-- [WebTorrent concept browser](./libdweb/wtp)
+- [IPFS Protocol support in Firefox][libdweb-ipfs].
+- [Dat protocol support for Firefox][libdweb-dat] (Compatible with [Beaker][] browser) and [Cliqz][]. 
+- [Cliqz contept mobile browser][libdweb-dat-mobile] with Dat protocol support.
+- [WebTorrent concept browser][libdweb-wtp]
 
 #### Lunet
 
@@ -153,3 +153,10 @@ Project replaced [TomTom Home][tomtom-home] desktop application _(Primarily map 
 [Actor Model]:https://en.wikipedia.org/wiki/Actor_model
 [parser combinators]:https://en.wikipedia.org/wiki/Parser_combinator
 
+
+
+[libdweb-ipfs]:./ipfs
+[libdweb-dat]:./dat
+[libdweb-dat-mobile]:./dat-mobile
+
+[libdweb-wtp]:./wtp
