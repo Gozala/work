@@ -1,7 +1,12 @@
-**Irakli Gozalishvili** _(a.k.a [@gozala](https://github.com/gozala/))_ 
+<div class="vcard" >
+	<img class="photo" src="./gozala.jpg" />
+  <p>
+    <strong class="fn">Irakli Gozalishvili</strong>
+    <a class="nickname" href="https://github.com/gozala">gozala</a>
+  </p>
+</div>
 
-I am an experienced software engineer with particular interest in [local-first software principles][local-first], [peer to peer][p2p] technologies and the end user programing _(slightly biased for [functional paradigm][functional])_.
-
+Experienced software engineer with particular interest in [local-first software principles][local-first], [peer to peer][p2p] technologies and the end user programing _(slightly biased for [functional paradigm][functional])_.
 [Add me to your address book][contact].
 
 ----
@@ -140,3 +145,11 @@ Project replaced [TomTom Home][tomtom-home] desktop application _(Primarily map 
 [p2p]:https://en.wikipedia.org/wiki/Peer-to-peer
 [functional]:https://en.wikipedia.org/wiki/Functional_programming
 [contact]:./gozala.vcf
+[SSB]:https://ssbc.github.io/scuttlebutt-protocol-guide/
+[ServiceWorkers]:https://developer.mozilla.org/en-US/docs/Web/API/Service_Worker_API
+[sandoxed-iframe]:https://www.html5rocks.com/en/tutorials/security/sandboxed-iframes/
+[Content Origin Policies]:https://developer.mozilla.org/en-US/docs/Web/Security/Same-origin_policy
+[3D touch]:https://developer.apple.com/design/human-interface-guidelines/ios/user-interaction/3d-touch/
+[Actor Model]:https://en.wikipedia.org/wiki/Actor_model
+[parser combinators]:https://en.wikipedia.org/wiki/Parser_combinator
+
