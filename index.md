@@ -1,13 +1,17 @@
-<div class="vcard" >
+---
+title: Irakli Gozalishvili
+---
+
+<div class="vcard">
 	<img class="photo" src="./gozala.jpg" />
   <p>
     <strong class="fn">Irakli Gozalishvili</strong>
-    <a class="nickname" href="https://github.com/gozala">gozala</a>
+    <a class="nickname" href="https://github.com/gozala" target="_blank">gozala</a>
   </p>
 </div>
-
 Experienced software engineer with particular interest in [local-first software principles][local-first], [peer to peer][p2p] technologies and the end user programing _(slightly biased for [functional paradigm][functional])_.
-[Add me to your address book][contact].
+
+[Add me to your address book](./gozala.vcf "My Virtual Contact File")
 
 ----
 
@@ -17,18 +21,18 @@ Asymmetry of traditional server/client architectures creates a power disbalance.
 
 #### Libdweb
 
-Identifying gaps of the web platform and filling those in Firefox to bring those technologies was project [libdweb][]. Through collaboration with [IPFS][], [Dat][] and [SSB][] communities missing primitives were recognized, which I have implemented as an experimental Firefox extension APIs. This lead to several successes:
+Identifying gaps of the web platform and filling those in Firefox to bring those technologies was project [libdweb](./libdweb). Through collaboration with [IPFS][], [Dat][] and [SSB][] communities missing primitives were recognized, which I have implemented as an experimental Firefox extension APIs. This lead to several successes:
 
-- [IPFS Protocol support in Firefox][libdweb-ipfs].
-- [Dat protocol support for Firefox][libdweb-dat] (Compatible with [Beaker][] browser) and [Cliqz][]. 
-- [Cliqz contept mobile browser][libdweb-dat-mobile] with Dat protocol support.
-- [WebTorrent concept browser][libdweb-wtp]
+- [IPFS Protocol support in Firefox](./ipfs).
+- [Dat protocol support for Firefox](./dat) (Compatible with [Beaker][] browser) and [Cliqz][]. 
+- [Cliqz contept mobile browser](./dat-mobile) with Dat protocol support.
+- [WebTorrent concept browser](./wtp)
 
 #### Lunet
 
-Enabling symmetric systems but within the constraints of existing web platform was goal of [Lunet][] project. It (ab)used range of web capabilities _([ServiceWorkers][], [Sandboxed iframe][sandoxed-iframe] and [Content Origin Policies][])_ to create a sandboxed web runtime in which applications work offline, operate on user data and are unable to track / silo users. 
+Enabling symmetric systems but within the constraints of existing web platform was goal of [Lunet](./lunet) project. It (ab)used range of web capabilities _([ServiceWorkers][], [Sandboxed iframe][sandoxed-iframe] and [Content Origin Policies][])_ to create a sandboxed web runtime in which applications work offline, operate on user data and are unable to track / silo users. 
 
-It also opportunistically leveraged companion native application to use capabilities unavailable in web platform, proposing [progressive peer-to-peer web application (PPWA)][PPWA] architecture.
+It also opportunistically leveraged companion native application to use capabilities unavailable in web platform, proposing [progressive peer-to-peer web application (PPWA)](./ppwa "Progressive peer-to-peer web applications (PPWA)") architecture.
 
 #### Content addressable data feeds
 
@@ -39,27 +43,27 @@ Inspired by developments of IPFS, Dat, SSB protocols I have [drafted a concept](
 Reimagining medium for the web, that is not just a client application a.k.a web browser. The True User Agent had been recurring objective of small team at Mozilla that I had opportunity to be a part of.
 
 
-User interface for the new generation web engine [Servo][], fit for the future and adequate for volumes of information that conventional browsers were failing to manage, was the goal of the [browser.html][] project. Empowered by [user research][] I have took part in exploring several concepts.
+User interface for the new generation web engine [Servo][], fit for the future and adequate for volumes of information that conventional browsers were failing to manage, was the goal of the [browser.html](./browserhtml) project. Empowered by [user research][] I have took part in exploring several concepts.
 
 #### Frame free web
 
-A **website art-directing the experience** was the future in which browser is an OS in disguise _(a.k.a [Firefox OS][])_. There was no place for ugly frame around the web, so we developed minimal chrome that like chameleon would adapt and blend in with the the content. [Read more][Frame free web]
+A **website art-directing the experience** was the future in which browser is an OS in disguise _(a.k.a [Firefox OS][])_. There was no place for ugly frame around the web, so we developed minimal chrome that like chameleon would adapt and blend in with the the content. [Read full story](./frame-free-web)
 
 #### Web Cards
 
-Concept reimagined tab strip (a.k.a Needle in a Haystack) as neatly organized, filterable list of cards, each capturing essence of the page. [Read more][Web Cards]
+Concept reimagined tab strip (a.k.a Needle in a Haystack) as neatly organized, filterable list of cards, each capturing essence of the page. [Read full story](./web-cards)
 
 #### Web Clips
 
-Web clips reimagined bookmarks as **cards clipping most valuable content** from the web building it's heat map as a replacement for the long list of addresses. [Read full story][Web Clips]
+Web clips reimagined bookmarks as **cards clipping most valuable content** from the web building it's heat map as a replacement for the long list of addresses. [Read full story](./web-clips)
 
 #### Web Highlighter
 
-Highlighter concept was an attempt to fill the need of **collecting and sharing content** on the web. Allowing user to capture any selection from the web page into a catalog that could be annotated and shared. [Read full story][Web Highlighter]
+Highlighter concept was an attempt to fill the need of **collecting and sharing content** on the web. Allowing user to capture any selection from the web page into a catalog that could be annotated and shared. [Read full story](./web-highlighter)
 
 #### Perspective UI
 
-Servo browser user interface as an HTML file in the cloud that you can fork to customize. In this iteration we dropped [cards concept][web cards] and pushed browser chrome into a third dimension [Read more][Perspective UI]
+Servo browser user interface as an HTML file in the cloud that you can fork to customize. In this iteration we dropped [cards concept](#Web_Cards) and pushed browser chrome into a third dimension [Read full story](./perspective-ui)
 
 #### Lossless Web Navigation with Trails
 
@@ -75,88 +79,62 @@ Performant spacial user interface in 3D space using web platform was a challenge
 
 #### Starling
 
-To take an advantage of modern hardware and parallel [servo][] engine we have designed a new concurrent runtime inspired by Erlang [Actor Model][]. Actors were represented via async functions that communicated through read/write streams and were dispatched onto the thread pool. Implementation of actors could be seamlessly switched between JS or Rust allowing greater optimization optimizations. [Read more][starling]
+To take an advantage of modern hardware and parallel [servo][] engine we have designed a new concurrent runtime inspired by Erlang [Actor Model][]. Actors were represented via async functions that communicated through read/write streams and were dispatched onto the thread pool. Implementation of actors could be seamlessly switched between JS or Rust allowing greater optimization optimizations. [Read full story](./starling)
 
 #### Dominion
 
-Running complex JS UI logic in the UI thread meant dropped frame sooner or later. This inspired my work on Virtual DOM library that moved that logic to the worker thread(s). By representing Virtual DOM tree and changes to it via byte code it became possible to program UI in worker thread, transfer all updates without copying.  [Read more][dominion]
+Running complex JS UI logic in the UI thread meant dropped frame sooner or later. This inspired my work on Virtual DOM library that moved that logic to the worker thread(s). By representing Virtual DOM tree and changes to it via byte code it became possible to program UI in worker thread, transfer all updates without copying.  [Read full story](./dominion)
 
 #### Decoders
 
-Running UI logic in the worker thread(s) required mechanism for event handling. Inspired by [parser combinators][] in functional languages I came to a solution that represented event handlers _(in the worker thread)_ via declarative event serializer. They were represented as a (part of Virtual DOM) byte code, run on events to capture & transfer required details for worker thread. [Read more][decoders]
+Running UI logic in the worker thread(s) required mechanism for event handling. Inspired by [parser combinators][] in functional languages I came to a solution that represented event handlers _(in the worker thread)_ via declarative event serializer. They were represented as a (part of Virtual DOM) byte code, run on events to capture & transfer required details for worker thread. [Read full story](./decoders)
 
 #### TomTom UI Toolkit
 
-I have designed and implemented high performance JS framework with reactive data bindings to powering [TomTomGo Live 1000][] user interface. Hardware limitations required an aggressive and at times creative optimizations to deliver smooth experience. [Read more][tomtom-webkit-ui]
+I have designed and implemented high performance JS framework with reactive data bindings to powering [TomTomGo Live 1000][] user interface. Hardware limitations required an aggressive and at times creative optimizations to deliver smooth experience. [Read full story](./tomtom-webkit-ui)
 
 #### Narval XULRunner
 
-Toolkit for building **cross-platform desktop apps with JS, HTML, and CSS** predating [ElectronJS][] and [NodeJS][]. Project was a port of [NarvalJS][] _(JS Server runtime predating [NodeJS][])_ to Mozilla [XULRunner][] that provided APIs for building cross-platform UI apps with HTML and native toolkits. [Read more][narwal-xulrunner]
+Toolkit for building **cross-platform desktop apps with JS, HTML, and CSS** predating [ElectronJS][] and [NodeJS][]. Project was a port of [NarvalJS](./narvaljs) _(JS Server runtime predating [NodeJS][])_ to Mozilla [XULRunner][] that provided APIs for building cross-platform UI apps with HTML and native toolkits. [Read full story](./narwal-xulrunner)
 
 #### Firebox
 
-Application runtime for running [Firefox OS Apps][firefoxos-apps] across multiple desktop platforms. It was used in an initial prototypes of [browser.html][] project. [Read more][firebox]
+Application runtime for running [Firefox OS Apps][firefoxos-apps] across multiple desktop platforms. It was used in an initial prototypes of [browser.html](./browserhtml) project. [Read full story](./firebox)
 
 ## Other
 
 #### TomTom Home (in the Cloud)
 
-Project replaced [TomTom Home][tomtom-home] desktop application _(Primarily map marketplace)_ with a web application. Novel idea _(at a time prior to internet connected devices)_ entailed putting HTTP server with REST API on the device so that web application _(Cloud based marketplace)_ could use to install purchased content. [Read more][tomtom-home-cloud].
+Project replaced [TomTom Home][tomtom-home] desktop application _(Primarily map marketplace)_ with a web application. Novel idea _(at a time prior to internet connected devices)_ entailed putting HTTP server with REST API on the device so that web application _(Cloud based marketplace)_ could use to install purchased content. [Read full story](./tomtom-home-cloud).
 
 
 
-[libdweb]:https://github.com/mozilla/libdweb "Experimental web-extension APIs for implementing P2P systems"
 [Beaker]:https://beakerbrowser.com/ "Experimental browser fo the peer-to-peer Web"
-[Cliqz]:https://cliqz.com/en/
-[PPWA]:./ppwa "Progressive peer-to-peer web applications (PPWA)"
+[Cliqz]:https://cliqz.com/ "Secure browser with built-in quick search"
 [ipfs-camp-ipdf]:https://www.youtube.com/watch?v=KBwR0I7i4Wg&feature=youtu.be
 [threads_v2]:https://blog.textile.io/introducing-textiles-threads-protocol/
-[Lunet]:./lunet
-[Perspective UI]:./perspective-ui
-[Web Cards]:./web-cards
-[Frame free Web]:./frame-free-web
-[Web Clips]:./web-clips
-[Web Highlighter]:./web-highlighter
-[spacial web ui]:./spacial-web-ui
-
 [ZKA]:https://medium.com/@vixentael/zero-knowledge-architectures-for-mobile-applications-b00a231fda75 "Zero Knowledge Architecture (ZKA)"
-[IPFS]:https://ipfs.io/
-[Dat]:https://dat.foundation/
-
+[IPFS]:https://ipfs.io/ "A peer-to-peer hypermedia protocol"
+[Dat]:https://dat.foundation/ "Protocol for sharing data between computers"
 [Servo]:https://servo.org/ "Servo is a modern, high-performance browser engine"
-
-[Firefox OS]:https://en.wikipedia.org/wiki/Firefox_OS
-[starling]: ./starling
-[dominion]:./dominion
-[decoders]:./decoders
-[iPhone 3G]:https://en.wikipedia.org/wiki/IPhone_3G
+[Firefox OS]:https://en.wikipedia.org/wiki/Firefox_OS "Discontinued open-source web based operating system by Mozilla"
+[iPhone 3G]:https://en.wikipedia.org/wiki/IPhone_3G	"Second generation iPhone"
 [TomTomGo Live 1000]:https://www.engadget.com/2010/04/27/tomtom-go-1000-live-to-offer-capacitive-touchscreen-webkit-brow/
-[ElectronJS]: https://electronjs.org/
-[NodeJS]:https://nodejs.org/
-[XULRunner]:https://en.wikipedia.org/wiki/XULRunner
-[NarvalJS]:./narvaljs
-[narwal-xulrunner]: ./narwal-xulrunner
+[ElectronJS]: https://electronjs.org/ "Build cross-platform desktop apps with JavaScript, HTML, and CSS"
+[NodeJS]:https://nodejs.org/ "JS runtime built on Chrome's V8 JavaScript engine."
+[XULRunner]:https://en.wikipedia.org/wiki/XULRunner "Cross platform desktop application development platform by Mozilla"
 [firefoxos-apps]:https://developer.mozilla.org/en-US/Marketplace/Options/Packaged_apps
-[browser.html]:./browserhtml
-[firebox]: ./firebox
 [tomtom-home]:http://us.support.tomtom.com/app/answers/detail/a_id/5122/~/installing-tomtom-home
-[tomtom-home-cloud]:./tomtom-home-cloud
-[local-first]:https://www.inkandswitch.com/local-first.html
-[p2p]:https://en.wikipedia.org/wiki/Peer-to-peer
+[local-first]:https://www.inkandswitch.com/local-first.html "Local-first softwareYou own your data, in spite of the cloud"
+[p2p]:https://en.wikipedia.org/wiki/Peer-to-peer "Peer-to-peer (P2P) networking architecture"
 [functional]:https://en.wikipedia.org/wiki/Functional_programming
-[contact]:./gozala.vcf
-[SSB]:https://ssbc.github.io/scuttlebutt-protocol-guide/
+
+[SSB]:https://scuttlebutt.nz/ "Decentralized secure gossip platform"
+
 [ServiceWorkers]:https://developer.mozilla.org/en-US/docs/Web/API/Service_Worker_API
 [sandoxed-iframe]:https://www.html5rocks.com/en/tutorials/security/sandboxed-iframes/
 [Content Origin Policies]:https://developer.mozilla.org/en-US/docs/Web/Security/Same-origin_policy
 [3D touch]:https://developer.apple.com/design/human-interface-guidelines/ios/user-interaction/3d-touch/
 [Actor Model]:https://en.wikipedia.org/wiki/Actor_model
 [parser combinators]:https://en.wikipedia.org/wiki/Parser_combinator
-
-
-
-[libdweb-ipfs]:./ipfs
-[libdweb-dat]:./dat
-[libdweb-dat-mobile]:./dat-mobile
-
-[libdweb-wtp]:./wtp
+[user research]:https://github.com/browserhtml/browserhtml/releases/tag/0.15.0

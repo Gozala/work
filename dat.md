@@ -1,12 +1,16 @@
 # Dat protocol support in Firefox
 
-[@sammacbeth][] combined [libdweb][] with [random-access-idb-mutable-file][] and few [libdweb adapters][] to get [dat implementation][] running in Firefox web extension context. This [brought `dat://` protocol support][dat-for-firefox-2] into Firefox via [dat-webext][] web extension. Add-on also provides [Beaker Browser][] [APIs][beaker docs] for the interoperability.
+[@sammacbeth][] combined [libdweb](./libdweb) with [random-access-idb-mutable-file][] and few [libdweb adapters][] to get [dat implementation][] running in Firefox web extension context. This [brought `dat://` protocol support][dat-for-firefox-2] into Firefox through [dat-webext][] web extension. Which also provides [Beaker Browser][] [APIs][beaker docs] for the interoperability.
+
+
 
 ​    ![dat-protocol-in-firefox "Dat Firefox add-on compatible with beaker"](dat-protocol.png)
 
 
 
-Add-on also works in [Cliqz][] browser.
+The [dat-webext][] also works in [Cliqz][] browser.
+
+
 
 ![Image](EK80aJdX0AEmpbT.jpeg)
 
@@ -22,3 +26,5 @@ Add-on also works in [Cliqz][] browser.
 [dat implementation]:https://github.com/datproject/dat-node
 [beaker docs]:https://beakerbrowser.com/docs/
 [dat-for-firefox-2]:https://sammacbeth.eu/blog/2019/05/12/dat-for-firefox-2.html
+[dat-webext]:https://github.com/cliqz-oss/dat-webext
+
