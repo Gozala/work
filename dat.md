@@ -4,15 +4,17 @@
 
 
 
-​    ![dat-protocol-in-firefox "Dat Firefox add-on compatible with beaker"](dat-protocol.png)
+![dat-protocol-in-firefox "Dat Firefox add-on compatible with beaker"](dat-protocol.png)
 
-
+<center>Dat site loaded in Firefox</center>
 
 The [dat-webext][] also works in [Cliqz][] browser.
 
-
-
 ![Image](EK80aJdX0AEmpbT.jpeg)
+
+<center>Dat site loaded in Cliqz</center>
+
+
 
 [@sammacbeth]:https://github.com/cliqz/cliqz-concept-browser/commits?author=sammacbethcli "Sam Macbeth"
 [Cliqz]: https://cliqz.com/ "Cliqz browser with built-in search engine"
@@ -21,6 +23,7 @@ The [dat-webext][] also works in [Cliqz][] browser.
 [libdweb]:https://github.com/mozilla/libdweb "Experimental Firefox extension APIs for P2P"
 
 [Beaker Browser]:https://beakerbrowser.com/ "Experimental browser fo the peer-to-peer Web"
+
 [random-access-idb-mutable-file]:https://github.com/random-access-storage/random-access-idb-mutable-file
 [libdweb adapters]:https://github.com/libdweb
 [dat implementation]:https://github.com/datproject/dat-node

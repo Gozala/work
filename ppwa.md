@@ -1,6 +1,6 @@
 # Native talk
 
-I have being exploring an idea of **progressive [peer-to-peer](https://en.wikipedia.org/wiki/Peer-to-peer ) web applications (PPWA)** that would not requiring browsers to ship underlying networking protocol. In this document I will describe an implementation strategy and existing challenges.
+I have being exploring an idea of **progressive [peer-to-peer][] web applications (PPWA)** that would not requiring browsers to ship underlying networking protocol. In this document I will describe an implementation strategy and existing challenges.
 
 ### Access Point
 
@@ -35,3 +35,5 @@ It is worth pointing out that PWAA could in fact be hosted by the underlying p2p
 What excites me the most about this idea is that provides a way for us to get fully decentralized collaborative applications like [pushpin](https://inkandswitch.github.io/pushpin/ ) or [pixelpusher](https://medium.com/@pvh/pixelpusher-real-time-peer-to-peer-collaboration-with-react-7c7bc8ecbf74 ) in the **stock browser** and without a need to reach through the cloud in native companion is available. And when it is not access point will take care of degrading to other transport options.
 
 I think it also might be interesting to explore access point as an account. That could allow connecting it to alternative peers like dedicated replication service you pay for or maybe be a box in the closet that your phone offloads all the work to.
+
+[peer-to-peer]:https://en.wikipedia.org/wiki/Peer-to-peer
