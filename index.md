@@ -36,7 +36,7 @@ It also opportunistically leveraged companion native application to use capabili
 
 #### Content addressable data feeds
 
-Inspired by developments of IPFS, Dat, SSB protocols I have [drafted a concept](./ipdf) of content addressable data feeds that enable collaborative applications adherence to [Zero Knowledge Architecture (ZKA)][ZKA]. [Shared this research with community][ipfs-camp-ipdf] and through continued collaboration with Textile team converged on design of new [Threads Protocol][threads_v2].
+Inspired by developments of IPFS, Dat, SSB protocols I have [drafted a concept][ipdf] of content addressable data feeds that enable collaborative applications adherence to [Zero Knowledge Architecture (ZKA)][ZKA]. [Shared this research with community][ipfs-camp-ipdf] and through continued collaboration with Textile team converged on design of new [Threads Protocol][threads_v2].
 
 ## User Interface
 
@@ -138,3 +138,5 @@ Project replaced [TomTom Home][tomtom-home] desktop application _(Primarily map 
 [Actor Model]:https://en.wikipedia.org/wiki/Actor_model
 [parser combinators]:https://en.wikipedia.org/wiki/Parser_combinator
 [user research]:https://github.com/browserhtml/browserhtml/releases/tag/0.15.0
+
+[ipdf]:https://github.com/gozala/ipdf/
