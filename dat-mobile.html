@@ -162,6 +162,8 @@ mark .md-meta { color: rgb(0, 0, 0); opacity: 0.3 !important; }
   --text-color: #333333;
   --link-color: #463f5c;
   --highlighted-text-color: yellow;
+  --line-color: #7a7a7a;
+  --quoted-text-color: #555;
   --header-color: #272727;
   --hr-border: 1px solid lightgray;
 
@@ -218,6 +220,9 @@ mark .md-meta { color: rgb(0, 0, 0); opacity: 0.3 !important; }
     --side-bar-bg-color: #2e3033;
     --text-color: #b8bfc6;
     --link-color: #a9b2d1;
+    --line-color: #474d54;
+    --quoted-text-color: #9da2a6;
+
     --header-color: #dedede;
     --highlighted-text-color: #bf7a8f;
     --hr-border: 1px solid #555;
@@ -521,6 +526,22 @@ a:focus {
   outline: thin dotted;
 }
 
+blockquote {
+  padding-left: 1.33em;
+  font-style: italic;
+  border-left: 2px solid var(--line-color);
+  color: var(--quoted-text-color);
+}
+
+blockquote footer {
+  font-size: 0.85rem;
+  font-style: normal;
+  background-color: var(--side-bar-bg-color);
+  border-color: transparent;
+}
+
+/* Typora specific */
+
 #write {
   padding-top: 2rem;
 }
@@ -793,6 +814,6 @@ a:focus {
 </style>
 </head>
 <body class='typora-export' >
-<div  id='write'  class = 'is-mac'><h1><a name="cliqz-contept-browserhttpsgithubcomcliqzcliqz-concept-browser" class="md-header-anchor"></a><a href='https://github.com/cliqz/cliqz-concept-browser'><span>Cliqz Contept Browser</span></a></h1><p><a href='https://github.com/cliqz/cliqz-concept-browser/commits?author=sammacbethcli' target='_blank' title='Sam Macbeth'><span>@sammacbeth</span></a><span> combined </span><a href='https://github.com/mozilla-mobile/reference-browser/' target='_blank' title='A full-featured browser reference implementation using Mozilla Android Components'><span>Mozilla reference browser</span></a><span> with </span><a href='./libdweb'><span>libdweb</span></a><span> and other </span><a href='https://cliqz.com/' target='_blank' title='Cliqz browser with built-in search engine'><span>Cliqz</span></a><span> features to create full featured Mobile web browser with built-in </span><code>dat://</code><span> protocol support, similar to </span><a href='https://beakerbrowser.com/' target='_blank' title='Experimental browser fo the peer-to-peer Web'><span>Beaker Browser</span></a><span>.</span></p><p><img src="./dat-mobile.gif" referrerpolicy="no-referrer" alt="dat mobile"></p><center>Short demo of loading dat site</center><p>&nbsp;</p></div>
+<div  id='write'  class = 'is-mac'><h1><a name="cliqz-contept-browserhttpsgithubcomcliqzcliqz-concept-browser" class="md-header-anchor"></a><a href='https://github.com/cliqz/cliqz-concept-browser'><span>Cliqz Contept Browser</span></a></h1><p>[<span>@sammacbeth</span>][]<span> combined </span><a href='https://github.com/mozilla-mobile/reference-browser/' target='_blank' title='A full-featured browser reference implementation using Mozilla Android Components'><span>Mozilla reference browser</span></a><span> with </span><a href='./libdweb'><span>libdweb</span></a><span> and other </span><a href='https://cliqz.com/' target='_blank' title='Cliqz browser with built-in search engine'><span>Cliqz</span></a><span> features to create full featured Mobile web browser with built-in </span><code>dat://</code><span> protocol support, similar to </span><a href='https://beakerbrowser.com/' target='_blank' title='Experimental browser fo the peer-to-peer Web'><span>Beaker Browser</span></a><span>.</span></p><p><img src="./dat-mobile.gif" referrerpolicy="no-referrer" alt="dat mobile"></p><center>Short demo of loading dat site</center><p>&nbsp;</p></div>
 </body>
 </html>

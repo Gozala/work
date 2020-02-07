@@ -32,7 +32,7 @@ Identifying gaps of the web platform and filling those in Firefox to bring those
 
 Enabling symmetric systems but within the constraints of existing web platform was goal of [Lunet](./lunet) project. It (ab)used range of web capabilities _([ServiceWorkers][], [Sandboxed iframe][sandoxed-iframe] and [Content Origin Policies][])_ to create a sandboxed web runtime in which applications work offline, operate on user data and are unable to track / silo users. 
 
-It also opportunistically leveraged companion native application to use capabilities unavailable in web platform, proposing [progressive peer-to-peer web application (PPWA)](./ppwa "Progressive peer-to-peer web applications (PPWA)") architecture.
+It also opportunistically leveraged companion native application to use capabilities unavailable in web platform, proposing [progressive peer-to-peer web application (PPWA)](./ppwa "Progressive peer-to-peer web applications (PPWA)") architecture. [Read full story](./lunet)
 
 #### Content addressable data feeds
 
@@ -40,14 +40,18 @@ Inspired by developments of IPFS, Dat, SSB protocols I have [drafted a concept][
 
 ## User Interface
 
-Reimagining medium for the web, that is not just a client application a.k.a web browser. The True User Agent had been recurring objective of small team at Mozilla that I had opportunity to be a part of.
+Reimagining medium for the web, that is not just a client application a.k.a web browser. The True User Agent had been recurring objective of the small team at Mozilla that I had an opportunity to be a part of.
 
 
-User interface for the new generation web engine [Servo][], fit for the future and adequate for volumes of information that conventional browsers were failing to manage, was the goal of the [browser.html](./browserhtml) project. Empowered by [user research][] I have took part in exploring several concepts.
+User interface for the new generation web engine [Servo][], fit for the future and adequate for volumes of information that conventional browsers were failing to manage, was the goal of the [browser.html](./browserhtml) project. Empowered by [user research][] we have exploring several concepts.
 
 #### Frame free web
 
 A **website art-directing the experience** was the future in which browser is an OS in disguise _(a.k.a [Firefox OS][])_. There was no place for ugly frame around the web, so we developed minimal chrome that like chameleon would adapt and blend in with the the content. [Read full story](./frame-free-web)
+
+#### Web User Interface
+
+Empowering users to (re)shape their User Agent was the vision, which is why user interface of this browser was just an HTML file hosted in the cloud. For different interface just point to a different HTML file. [Read full story](./graphene)
 
 #### Web Cards
 
@@ -63,7 +67,7 @@ Highlighter concept was an attempt to fill the need of **collecting and sharing 
 
 #### Perspective UI
 
-Servo browser user interface as an HTML file in the cloud that you can fork to customize. In this iteration we dropped [cards concept](#Web_Cards) and pushed browser chrome into a third dimension [Read full story](./perspective-ui)
+Introduction of [3D touch][] inspired us to explore a new dimension. We completely redesigned user interface and pushed browser chrome into a third dimension [Read full story](./perspective-ui)
 
 #### Lossless Web Navigation with Trails
 
@@ -76,6 +80,12 @@ We set out to enhance existing browser workflows such that they felt familiar & 
 ## Runtimes / Frameworks
 
 Performant spacial user interface in 3D space using web platform was a challenge and a journey that has unfolded in parallel.
+
+
+
+#### Graphene
+
+Designed to be thinnest possible layer for the web for rapid concept browser development. A web engine with a user interface that is just an HTML file in the cloud. [Read the full story](./graphene)
 
 #### Starling
 
@@ -99,7 +109,7 @@ Toolkit for building **cross-platform desktop apps with JS, HTML, and CSS** pred
 
 #### Firebox
 
-Application runtime for running [Firefox OS Apps][firefoxos-apps] across multiple desktop platforms. It was used in an initial prototypes of [browser.html](./browserhtml) project. [Read full story](./firebox)
+Application runtime for running [Firefox OS Apps][firefoxos-apps] across multiple desktop platforms. It was used in an initial prototypes of [browser.html](./browserhtml) project.
 
 ## Other
 
@@ -135,8 +145,8 @@ Project replaced [TomTom Home][tomtom-home] desktop application _(Primarily map 
 [sandoxed-iframe]:https://www.html5rocks.com/en/tutorials/security/sandboxed-iframes/
 [Content Origin Policies]:https://developer.mozilla.org/en-US/docs/Web/Security/Same-origin_policy
 [3D touch]:https://developer.apple.com/design/human-interface-guidelines/ios/user-interaction/3d-touch/
+
 [Actor Model]:https://en.wikipedia.org/wiki/Actor_model
 [parser combinators]:https://en.wikipedia.org/wiki/Parser_combinator
 [user research]:https://github.com/browserhtml/browserhtml/releases/tag/0.15.0
-
 [ipdf]:https://github.com/gozala/ipdf/
