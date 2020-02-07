@@ -10,29 +10,29 @@ Lunet loads applications into [sandboxed iframe][] with unique [origin][] _(by d
 
 #### The network is optional
 
-Application source is saved locally on the first load. Runtime provided [service worker][] is used to load from that point on. In this setup applications do not read and modify data into the cloud, instead they read and modify your data locally in a unified library & give you a choice to share with others.
+Application source is saved locally on the first load. Runtime provided [service worker][], used to load it from that point on. In this setup applications do not read and modify data into the cloud, instead they read and modify your data locally in a unified library & give you a choice to share with others.
 
 #### Security and privacy by default
 
-Applications are provided access to a space in your local library conforming [Zero Knowledge Architecture (ZKA)][ZKA]. Every piece of data gets seamlessly encrypted / decrypted when application writes / reads and is unaware of what cryptographic keys are used. This design provides security & privacy by default without applications have to worry about it. It also allows leveraging existing cloud infrastructure  without surrendering data or privacy to the host.
+Application is provided access to a space in your local library conforming [Zero Knowledge Architecture (ZKA)][ZKA]. Every piece of data gets seamlessly encrypted / decrypted when application writes / reads and is unaware of what cryptographic keys are used. This design provides security & privacy by default without application having to worry about it. It also allows leveraging existing cloud infrastructure  without surrendering data or privacy to the host.
 
 #### The Long Now
 
-By saving applications locally and confining them to a sandbox, that allows reading and modifying data in your library, they inherit "Old-fashioned" benefits. Continue to work as long as you keep them around for and all your data remains local in your library. It also becomes possible to choose between applications that support same data format leading to [interoperability by default](#Interoperability_by_default).
+By saving applications locally and confining them to a sandbox, that allows reading and modifying data in your library, they inherit "Old-fashioned" benefits. Continue to work as long as you keep them around and all your data remains local in your library. It also becomes possible to choose between applications that support same data format, leading to [interoperability by default](#Interoperability_by_default).
 
 #### Interoperability by default
 
-In order to avoid local data silos and make application interoperability, lunet uses addressing scheme (inspired by [unix pipe notation][unix-pipe]) reflecting desired document in your library and an application operating on it. This design allows confining application sandbox to that document only and enables user to choose what application to use.
+In order to avoid local data silos and make applications interoperable, lunet uses addressing scheme (inspired by [unix pipe notation][unix-pipe]) reflecting desired document in your library and an application operating on it. This design allows confining application sandbox to that document only and enables user to choose what application to use.
 
 I think it is worth exploring this idea further to allow piping document through an intermediary application(s) that act as data format adapters.
 
 #### Progressive enhancement
 
-Web platform has no capabilities that allow devices within hands reach communicate without a cloud. That would prevent applications from offering (near) real-time collaboration off the grid. To overcome this limitation I have explored idea of [Progressive peer-to-peer Web Applications (PPWA)](./ppwa) and integrated into lunet. Lunet runtime attempts to connect to a local native application which exposes extra capabilities (like [libdweb](./libdweb) over REST API) allowing it to establish peer-to-peer connections with nearby devices.
+Web platform has no capabilities that allow devices within hands reach communicate without a cloud. That would prevent applications from offering (near) real-time collaboration off the grid. To overcome this limitation I have explored the idea of [Progressive peer-to-peer Web Applications (PPWA)](./ppwa) and integrated into lunet. Lunet runtime attempts to connect to a local native application which exposes extra capabilities (like [libdweb](./libdweb) over REST API) allowing it to establish peer-to-peer connections with nearby devices.
 
 ## Demo
 
-Example below demonstrates [fork][peerdium-fork] of [peerdium][peerdium] loaded. And typed document saved as `Hola.quill` into local library in the `peerdium` namespace. After document is saved addresser changes and shows that local `/peerdium/data/Hola.quill` document is being by local `/peerdium/` application.
+Example below demonstrates [fork][peerdium-fork] of [peerdium][peerdium] loaded. And typed document saved as `Hola.quill` into local library in the `peerdium` namespace. After document is saved, address bar changes and shows that local `/peerdium/data/Hola.quill` document is being loaded by local `/peerdium/` application.
 
 ![create document](./create-document.gif)
 
@@ -64,7 +64,7 @@ In segment below we see modifications being made by `/lunetarium` and being refl
 
 
 
-In the last segment new document is saved by `/lunetarium` and later created document being loaded via  `/peerdium.gozala.io` which is loaded first time from the network (although it's just a copy of the same [peerdium fork][peerdium-fork]).
+In the last segment new document is saved by `/lunetarium` and later it is loaded via `/peerdium.gozala.io` which is loaded first time from the network (although it's just a copy of the same [peerdium fork][peerdium-fork]).
 
 
 
