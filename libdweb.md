@@ -26,7 +26,7 @@ Implementation provides access to TCP client and server sockets. I mostly follow
 
 Implementation provided API to provide access to an OS file system, restricted to a user chosen directory. However later API was dropped in favor of non-standard [IDBMutableFile][] Web API.
 
-I have also implemented [random-access-idb-mutable-file][] providing [random-access-storage][] backed by [IDBMutableFile][] to make [hypercore][] usable from with-in [protocol][#Protocol_API] handler.
+I have also implemented [random-access-idb-mutable-file][] providing [random-access-storage][] backed by [IDBMutableFile][] to make [hypercore][] usable from with-in [protocol](#Protocol_API) handler.
 
 
 

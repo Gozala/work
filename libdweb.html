@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta charset='UTF-8'><meta name='viewport' content='width=device-width initial-scale=1'>
-<title>libdweb</title><style type='text/css'>html {overflow-x: initial !important;}:root { --bg-color: #ffffff; --text-color: #333333; --select-text-bg-color: #B5D6FC; --select-text-font-color: auto; --monospace: "Lucida Console",Consolas,"Courier",monospace; }
+<title>Experimental web-extension APIs for implementing P2P systems</title><style type='text/css'>html {overflow-x: initial !important;}:root { --bg-color: #ffffff; --text-color: #333333; --select-text-bg-color: #B5D6FC; --select-text-font-color: auto; --monospace: "Lucida Console",Consolas,"Courier",monospace; }
 html { font-size: 14px; background-color: var(--bg-color); color: var(--text-color); font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; -webkit-font-smoothing: antialiased; }
 body { margin: 0px; padding: 0px; height: auto; bottom: 0px; top: 0px; left: 0px; right: 0px; font-size: 1rem; line-height: 1.42857143; overflow-x: hidden; background-image: inherit; background-size: inherit; background-attachment: inherit; background-origin: inherit; background-clip: inherit; background-color: inherit; tab-size: 4; background-position: inherit inherit; background-repeat: inherit inherit; }
 iframe { margin: auto; }
@@ -162,6 +162,8 @@ mark .md-meta { color: rgb(0, 0, 0); opacity: 0.3 !important; }
   --text-color: #333333;
   --link-color: #463f5c;
   --highlighted-text-color: yellow;
+  --line-color: #7a7a7a;
+  --quoted-text-color: #555;
   --header-color: #272727;
   --hr-border: 1px solid lightgray;
 
@@ -218,6 +220,9 @@ mark .md-meta { color: rgb(0, 0, 0); opacity: 0.3 !important; }
     --side-bar-bg-color: #2e3033;
     --text-color: #b8bfc6;
     --link-color: #a9b2d1;
+    --line-color: #474d54;
+    --quoted-text-color: #9da2a6;
+
     --header-color: #dedede;
     --highlighted-text-color: #bf7a8f;
     --hr-border: 1px solid #555;
@@ -521,6 +526,22 @@ a:focus {
   outline: thin dotted;
 }
 
+blockquote {
+  padding-left: 1.33em;
+  font-style: italic;
+  border-left: 2px solid var(--line-color);
+  color: var(--quoted-text-color);
+}
+
+blockquote footer {
+  font-size: 0.85rem;
+  font-style: normal;
+  background-color: var(--side-bar-bg-color);
+  border-color: transparent;
+}
+
+/* Typora specific */
+
 #write {
   padding-top: 2rem;
 }
@@ -793,6 +814,6 @@ a:focus {
 </style>
 </head>
 <body class='typora-export' >
-<div  id='write'  class = 'is-mac'><h1><a name="libdweb" class="md-header-anchor"></a><span>libdweb</span></h1><p><span>Mozilla </span><a href='https://github.com/mozilla/libdweb' target='_blank'><span>project libdweb</span></a><span> was an attempt to bridge the gaps in the web platform and enable new protocols like </span><a href='https://ipfs.io/' target='_blank' title='A peer-to-peer hypermedia protocol'><span>IPFS</span></a><span>, </span><a href='https://dat.foundation/' target='_blank' title='Protocol for sharing data between computers'><span>Dat</span></a><span>, </span><a href='https://scuttlebutt.nz/' target='_blank' title='Decentralized secure gossip platform'><span>SSB</span></a><span> within the Firefox. In collaboration with corresponding protocol authors I have identified set of missing  capabilities and implemented those as an experimental Firefox extensions APIs.</span></p><h4><a name="protocol-api" class="md-header-anchor"></a><span>Protocol API</span></h4><p><span>Protocol API provided a mechanism for adding custom protocol implementation to Firefox. I mostly followed </span><a href='https://developer.mozilla.org/en-US/docs/Web/API/Service_Worker_API' target='_blank'><span>ServiceWorker</span></a><span> API, but in unlike that API registration happens against a protocol scheme (e.g. </span><code>dat://</code><span>) instead of an origin and a path.</span></p><h4><a name="service-discovery-api" class="md-header-anchor"></a><span>Service Discovery API</span></h4><p><span>API provides DNS-Based Service Discovery API as per </span><a href='https://tools.ietf.org/html/rfc6763' target='_blank'><span>rfc6763</span></a><span>. It allows user to broadcast / discover available services on the local network.</span></p><h4><a name="udpsocket-api" class="md-header-anchor"></a><span>UDPSocket API</span></h4><p><span>Implementation provides raw UDP Socket access and I mostly followed </span><a href='https://www.w3.org/TR/tcp-udp-sockets/' target='_blank'><span>W3C UDP Socket specification</span></a><span>. To simply adoption I have also implemented </span>[<span>NodeJS</span>][]<span>  </span><a href='https://nodejs.org/api/dgram.html' target='_blank'><span>dgram</span></a><span> API adapter </span><a href='https://github.com/libdweb/dgram-adapter' target='_blank'><span>@libdweb/dgram-adapter</span></a><span>.</span></p><h4><a name="tcpsocket-api" class="md-header-anchor"></a><span>TCPSocket API</span></h4><p><span>Implementation provides access to TCP client and server sockets. I mostly following </span><a href='https://www.w3.org/TR/tcp-udp-sockets/' target='_blank'><span>W3C TCP Socket specification</span></a><span>. </span><a href='https://substack.net/' target='_blank'><span>@substack</span></a><span> developed </span>[<span>NodeJS</span>][]<span> </span>[<span>net</span>][]<span> API compatibility </span><a href='https://gist.github.com/substack/7d694274e2f11f6925299b01b31b2efa' target='_blank'><span>adapter</span></a><span>.</span></p><h4><a name="filesystem-api" class="md-header-anchor"></a><span>FileSystem API</span></h4><p><span>Implementation provided API to provide access to an OS file system, restricted to a user chosen directory. However later API was dropped in favor of non-standard </span><a href='https://developer.mozilla.org/en-US/docs/Web/API/IDBMutableFile' target='_blank'><span>IDBMutableFile</span></a><span> Web API.</span></p><p><span>I have also implemented </span><a href='https://github.com/random-access-storage/random-access-idb-mutable-file' target='_blank'><span>random-access-idb-mutable-file</span></a><span> providing </span><a href='https://github.com/random-access-storage' target='_blank'><span>random-access-storage</span></a><span> backed by </span><a href='https://developer.mozilla.org/en-US/docs/Web/API/IDBMutableFile' target='_blank'><span>IDBMutableFile</span></a><span> to make </span><a href='https://github.com/mafintosh/hypercore' target='_blank'><span>hypercore</span></a><span> usable from with-in </span>[<span>protocol</span>][#Protocol_API]<span> handler.</span></p><p>&nbsp;</p><p>&nbsp;</p></div>
+<div  id='write'  class = 'is-mac'><h1><a name="libdweb" class="md-header-anchor"></a><span>libdweb</span></h1><p><span>Mozilla </span><a href='https://github.com/mozilla/libdweb' target='_blank'><span>project libdweb</span></a><span> was an attempt to bridge the gaps in the web platform and enable new protocols like </span><a href='https://ipfs.io/' target='_blank' title='A peer-to-peer hypermedia protocol'><span>IPFS</span></a><span>, </span><a href='https://dat.foundation/' target='_blank' title='Protocol for sharing data between computers'><span>Dat</span></a><span>, </span><a href='https://scuttlebutt.nz/' target='_blank' title='Decentralized secure gossip platform'><span>SSB</span></a><span> within the Firefox. In collaboration with corresponding protocol authors I have identified set of missing  capabilities and implemented those as an experimental Firefox extensions APIs.</span></p><h4><a name="protocol-api" class="md-header-anchor"></a><span>Protocol API</span></h4><p><span>Protocol API provided a mechanism for adding custom protocol implementation to Firefox. I mostly followed </span><a href='https://developer.mozilla.org/en-US/docs/Web/API/Service_Worker_API' target='_blank'><span>ServiceWorker</span></a><span> API, but in unlike that API registration happens against a protocol scheme (e.g. </span><code>dat://</code><span>) instead of an origin and a path.</span></p><h4><a name="service-discovery-api" class="md-header-anchor"></a><span>Service Discovery API</span></h4><p><span>API provides DNS-Based Service Discovery API as per </span><a href='https://tools.ietf.org/html/rfc6763' target='_blank'><span>rfc6763</span></a><span>. It allows user to broadcast / discover available services on the local network.</span></p><h4><a name="udpsocket-api" class="md-header-anchor"></a><span>UDPSocket API</span></h4><p><span>Implementation provides raw UDP Socket access and I mostly followed </span><a href='https://www.w3.org/TR/tcp-udp-sockets/' target='_blank'><span>W3C UDP Socket specification</span></a><span>. To simply adoption I have also implemented </span>[<span>NodeJS</span>][]<span>  </span><a href='https://nodejs.org/api/dgram.html' target='_blank'><span>dgram</span></a><span> API adapter </span><a href='https://github.com/libdweb/dgram-adapter' target='_blank'><span>@libdweb/dgram-adapter</span></a><span>.</span></p><h4><a name="tcpsocket-api" class="md-header-anchor"></a><span>TCPSocket API</span></h4><p><span>Implementation provides access to TCP client and server sockets. I mostly following </span><a href='https://www.w3.org/TR/tcp-udp-sockets/' target='_blank'><span>W3C TCP Socket specification</span></a><span>. </span><a href='https://substack.net/' target='_blank'><span>@substack</span></a><span> developed </span>[<span>NodeJS</span>][]<span> </span>[<span>net</span>][]<span> API compatibility </span><a href='https://gist.github.com/substack/7d694274e2f11f6925299b01b31b2efa' target='_blank'><span>adapter</span></a><span>.</span></p><h4><a name="filesystem-api" class="md-header-anchor"></a><span>FileSystem API</span></h4><p><span>Implementation provided API to provide access to an OS file system, restricted to a user chosen directory. However later API was dropped in favor of non-standard </span><a href='https://developer.mozilla.org/en-US/docs/Web/API/IDBMutableFile' target='_blank'><span>IDBMutableFile</span></a><span> Web API.</span></p><p><span>I have also implemented </span><a href='https://github.com/random-access-storage/random-access-idb-mutable-file' target='_blank'><span>random-access-idb-mutable-file</span></a><span> providing </span><a href='https://github.com/random-access-storage' target='_blank'><span>random-access-storage</span></a><span> backed by </span><a href='https://developer.mozilla.org/en-US/docs/Web/API/IDBMutableFile' target='_blank'><span>IDBMutableFile</span></a><span> to make </span><a href='https://github.com/mafintosh/hypercore' target='_blank'><span>hypercore</span></a><span> usable from with-in </span><a href='#Protocol_API'><span>protocol</span></a><span> handler.</span></p><p>&nbsp;</p><p>&nbsp;</p></div>
 </body>
 </html>
