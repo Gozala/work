@@ -10,7 +10,7 @@ Concept reimagined tab strip (a.k.a Needle in a Haystack) as a neatly organized,
 
 
 
-<video autoplay="true" loop="true" src="./ElatedDistantDrever.mp4"></video>
+<video loop controls mute src="./ElatedDistantDrever.mp4"></video>
 
 <center>Transition from site view to cards view</center>
 
@@ -40,7 +40,7 @@ In this iteration [@paulrouget][] also introduced idea of picture in picture, wh
 
 
 
-We also carried on idea of wallpapers (I was not a fan).
+We also carried on the idea of wallpapers (I was not a fan).
 
 
 

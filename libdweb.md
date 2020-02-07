@@ -48,3 +48,6 @@ I have also implemented [random-access-idb-mutable-file][] providing [random-acc
 [random-access-storage]:https://github.com/random-access-storage
 [random-access-idb-mutable-file]:https://github.com/random-access-storage/random-access-idb-mutable-file
 [hypercore]:https://github.com/mafintosh/hypercore
+[NodeJS]:https://nodejs.org/
+[net]:https://nodejs.org/api/net.html
+

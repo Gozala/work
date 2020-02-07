@@ -27,7 +27,7 @@ Concept reimagined tab strip (a.k.a Needle in a Haystack) as neatly organized, f
 
 #### Web Clips
 
-Web clips reimagined bookmarks as **cards clipping most valuable content** from the web building it's heat map as a replacement for the long list of addresses. [Read full story](./web-clips)
+Web clips reimagined replacement for bookmarks (the long list of addresses) as **cards clipping most valuable content** from the web, thus building a web heat map. [Read full story](./web-clips)
 
 #### Web Highlighter
 
@@ -39,11 +39,11 @@ Introduction of [3D touch][] inspired us to explore a new dimension. We complete
 
 #### Lossless Web Navigation with Trails
 
-Trails concept was an attempt to evolve problematic user interface concepts like tabs, navigation history, bookmarks into unified concept that visualized a user’s journey through the web. Implementation mapped active browsing sessions (tabs), corresponding histories (session history) and past sessions (browser history) to navigation trails by visualizing it through rows  as expandable stacks of cards. [Read full story](https://medium.freecodecamp.org/lossless-web-navigation-with-trails-9cd48c0abb56)
+Trails concept was an attempt to evolve problematic user interface concepts like tabs, navigation history, bookmarks into unified concept that visualized a user’s journey through the web. Implementation mapped active browsing sessions (tabs), corresponding histories (session history) and past sessions (browser history) to navigation trails by visualizing it through rows  as expandable stacks of cards. [Read full story][trails]
 
 #### Spacial User Interface of the Web
 
-We set out to enhance existing browser workflows such that they felt familiar & more effective. Special user interface with added dimension and pressure sensitive [3D touch][] were applied across all interactions and views to convey rich yet intuitive mental model. [Read full story](https://medium.com/free-code-camp/lossless-web-navigation-spatial-model-37f83438201d)
+We set out to enhance existing browser workflows such that they felt familiar & more effective. Special user interface with added dimension and pressure sensitive [3D touch][] were applied across all interactions and views to convey rich, yet intuitive mental model. [Read full story][spacial-ui]
 
 
 
@@ -72,3 +72,6 @@ Running complex JS UI logic in the UI thread meant dropped frame sooner or later
 [React]:https://reactjs.org/
 [reflex]:https://github.com/mozilla/reflex
 [elm-architucture]:https://guide.elm-lang.org/architecture/
+[trails]:https://medium.freecodecamp.org/lossless-web-navigation-with-trails-9cd48c0abb56
+[spacial-ui]: https://medium.com/free-code-camp/lossless-web-navigation-spatial-model-37f83438201d
+[3D touch]:https://developer.apple.com/design/human-interface-guidelines/ios/user-interaction/3d-touch/

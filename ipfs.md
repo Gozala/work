@@ -14,9 +14,7 @@ This inspired [Brave browser][] to develop [libdweb](./libdweb) like extension A
 
 
 
-![IPFS in Brave](32887083-9eaf5926-caba-11e7-9490-2ea026727c41.png)
-
-<center>Content loaded from IPFS URL in Brave</center>
+![IPFS in Brave](32887083-9eaf5926-caba-11e7-9490-2ea026727c41.png)<center>Content loaded from IPFS URL in Brave</center>
 
 
 

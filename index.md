@@ -9,7 +9,7 @@ title: Irakli Gozalishvili
     <a class="nickname" href="https://github.com/gozala" target="_blank">gozala</a>
   </p>
 </div>
-Senior software engineer with particular interest in [local-first software principles][local-first], [peer to peer][p2p] technologies and the end user programing _(slightly biased for [functional paradigm][functional])_.
+Senior research engineer with particular interest in [local-first software principles][local-first], [peer to peer][p2p] technologies and the end user programing _(slightly biased for [functional paradigm][functional])_.
 
 [Add me to your address book](./gozala.vcf "My Virtual Contact File")
 
@@ -59,7 +59,7 @@ Concept reimagined tab strip (a.k.a Needle in a Haystack) as neatly organized, f
 
 #### Web Clips
 
-Web clips reimagined bookmarks as **cards clipping most valuable content** from the web building it's heat map as a replacement for the long list of addresses. [Read full story](./web-clips)
+Web clips reimagined replacement for bookmarks (the long list of addresses) as **cards clipping most valuable content** from the web, thus building a web heat map. [Read full story](./web-clips)
 
 #### Web Highlighter
 
@@ -71,17 +71,15 @@ Introduction of [3D touch][] inspired us to explore a new dimension. We complete
 
 #### Lossless Web Navigation with Trails
 
-Trails concept was an attempt to evolve problematic user interface concepts like tabs, navigation history, bookmarks into unified concept that visualized a user’s journey through the web. Implementation mapped active browsing sessions (tabs), corresponding histories (session history) and past sessions (browser history) to navigation trails by visualizing it through rows  as expandable stacks of cards. [Read full story](https://medium.freecodecamp.org/lossless-web-navigation-with-trails-9cd48c0abb56)
+Trails concept was an attempt to evolve problematic user interface concepts like tabs, navigation history, bookmarks into unified concept that visualized a user’s journey through the web. Implementation mapped active browsing sessions (tabs), corresponding histories (session history) and past sessions (browser history) to navigation trails by visualizing it through rows  as expandable stacks of cards. [Read full story][trails]
 
 #### Spacial User Interface of the Web
 
-We set out to enhance existing browser workflows such that they felt familiar & more effective. Special user interface with added dimension and pressure sensitive [3D touch][] were applied across all interactions and views to convey rich yet intuitive mental model. [Read full story](https://medium.com/free-code-camp/lossless-web-navigation-spatial-model-37f83438201d)
+We set out to enhance existing browser workflows such that they felt familiar & more effective. Special user interface with added dimension and pressure sensitive [3D touch][] were applied across all interactions and views to convey rich, yet intuitive mental model. [Read full story][spacial-ui]
 
 ## Runtimes / Frameworks
 
 Performant spacial user interface in 3D space using web platform was a challenge and a journey that has unfolded in parallel.
-
-
 
 #### Graphene
 
@@ -89,11 +87,11 @@ Designed to be thinnest possible layer for the web for rapid concept browser dev
 
 #### Starling
 
-To take an advantage of modern hardware and parallel [servo][] engine we have designed a new concurrent runtime inspired by Erlang [Actor Model][]. Actors were represented via async functions that communicated through read/write streams and were dispatched onto the thread pool. Implementation of actors could be seamlessly switched between JS or Rust allowing greater optimization optimizations. [Read full story](./starling)
+To take an advantage of modern hardware and parallel [servo][] engine we have designed a new concurrent runtime inspired by Erlang [Actor Model][]. Actors were represented via async functions that communicated through read/write streams and were dispatched onto the thread pool. Implementation of actors could be seamlessly switched between JS or Rust allowing greater optimizations. [Read full story](./starling)
 
 #### Dominion
 
-Running complex JS UI logic in the UI thread meant dropped frame sooner or later. This inspired my work on Virtual DOM library that moved that logic to the worker thread(s). By representing Virtual DOM tree and changes to it via byte code it became possible to program UI in worker thread, transfer all updates without copying.  [Read full story](./dominion)
+Running complex JS UI logic in the UI thread meant dropping a frame sooner or later. This inspired my work on Virtual DOM library, that moved that logic to the worker thread(s). It represented Virtual DOM tree and changes to it via byte code. This made possible to program UI in worker thread and transfer all updates without copying.  [Read full story](./dominion)
 
 #### Decoders
 
@@ -103,9 +101,9 @@ Running UI logic in the worker thread(s) required mechanism for event handling. 
 
 I have designed and implemented high performance JS framework with reactive data bindings to powering [TomTomGo Live 1000][] user interface. Hardware limitations required an aggressive and at times creative optimizations to deliver smooth experience. [Read full story](./tomtom-webkit-ui)
 
-#### Narval XULRunner
+#### Narwhal XULRunner
 
-Toolkit for building **cross-platform desktop apps with JS, HTML, and CSS** predating [ElectronJS][] and [NodeJS][]. Project was a port of [NarvalJS](./narvaljs) _(JS Server runtime predating [NodeJS][])_ to Mozilla [XULRunner][] that provided APIs for building cross-platform UI apps with HTML and native toolkits. [Read full story](./narwal-xulrunner)
+Toolkit for building **cross-platform desktop apps with JS, HTML, and CSS** predating [ElectronJS][] and [NodeJS][]. Project was a port of [NarwhaJS](./narwhal) _(JS Server runtime predating [NodeJS][])_ to Mozilla [XULRunner][] that provided APIs for building cross-platform UI apps with HTML and native toolkits. [Read full story](./narwhal-xulrunner)
 
 #### Firebox
 
@@ -115,7 +113,7 @@ Application runtime for running [Firefox OS Apps][firefoxos-apps] across multipl
 
 #### TomTom Home (in the Cloud)
 
-Project replaced [TomTom Home][tomtom-home] desktop application _(Primarily map marketplace)_ with a web application. Novel idea _(at a time prior to internet connected devices)_ entailed putting HTTP server with REST API on the device so that web application _(Cloud based marketplace)_ could use to install purchased content. [Read full story](./tomtom-home-cloud).
+This project replaced [TomTom Home][tomtom-home] desktop application _(Primarily map marketplace)_ with a web application. Novel idea _(at a time prior to internet connected devices)_ entailed putting HTTP server with REST API on the device so that web application _(Cloud based marketplace)_ could use to install purchased content. [Read full story](./tomtom-home-cloud).
 
 
 
@@ -145,8 +143,10 @@ Project replaced [TomTom Home][tomtom-home] desktop application _(Primarily map 
 [sandoxed-iframe]:https://www.html5rocks.com/en/tutorials/security/sandboxed-iframes/
 [Content Origin Policies]:https://developer.mozilla.org/en-US/docs/Web/Security/Same-origin_policy
 [3D touch]:https://developer.apple.com/design/human-interface-guidelines/ios/user-interaction/3d-touch/
-
 [Actor Model]:https://en.wikipedia.org/wiki/Actor_model
 [parser combinators]:https://en.wikipedia.org/wiki/Parser_combinator
 [user research]:https://github.com/browserhtml/browserhtml/releases/tag/0.15.0
+[trails]:https://medium.freecodecamp.org/lossless-web-navigation-with-trails-9cd48c0abb56
+[spacial-ui]: https://medium.com/free-code-camp/lossless-web-navigation-spatial-model-37f83438201d
 [ipdf]:https://github.com/gozala/ipdf/
+

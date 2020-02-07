@@ -4,9 +4,9 @@
 
 ![https://github.com/tom-james-watson/wtp-ext "WebTorrent Browser Concept"](c1QSZWU-20200130145316547.png)
 
-
-
 <center>Site loaded (from torrent) in Firefox</center>
+
+
 
 [@tom-james-watson]:https://github.com/tom-james-watson "Tom Watson"
 [libdweb]:https://github.com/mozilla/libdweb "Experimental Firefox extension APIs for P2P"

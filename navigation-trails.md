@@ -1,5 +1,0 @@
-# Navigation Trails
-
-Tabs, Browsing History, Bookmarks proved to be a poor tools with essentially a same task. User research lead us believe that we could upgrade existing metaphors and present those through a different lens that we called "navigation trails". Existing browsing sessions and browsing history got mapped onto expandable card stacks that also attempted to capture forks in navigation & blur lines between active sessions (tabs) and inactive ones (history) to better utilize visual space and computer resources.
-
-Making snappy user interface in 3D space with infinitely large canvas at 60FPS using web platform was not the only challenge. Zooming in / out between web content and navigation trail meant web content had to remain alive for active trails, while older trails needed a way to be capturing such that they could be restored at will.

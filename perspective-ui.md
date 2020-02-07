@@ -2,17 +2,25 @@
 
 
 
-# Perspectieve UI
+# Perspective UI
 
-Introduction of [3D touch][] inspired us to explore a new dimension. We completely redesigned user interface, stepped back from [cards](./web-cards) concept to more familiar tabs model as a default UI for [servo][] nightly builds. 
-
-
+We completely redesigned user interface, stepped back from [cards](./web-cards) concept to more familiar tabs model as a default UI for [servo][] nightly builds. 
 
 ![browserhtml](browserhtml.gif)
 
 
 
-In this iteration we opted into more minimal progress bar and spend a lot of time to improving load-time perception it created. Turns out same load time can be perceived as very slow or fast based on how it progresses. 
+Introduction of [3D touch][] inspired us to explore a new dimension that could be controlled by a touch pressure. Light touch providing a quick peek at the tabs. Pressure past threshold unveiled full browser chrome.
+
+
+
+<video controls loop mute src="./zoom-in-out.mp4"></video>
+
+<center>Demo of touch pressure been used to zoom in / out chrome</center>
+
+
+
+In this iteration we opted for more minimal progress bar and spent a lot of time to improving load-time perception it created. Turns out same load time can be perceived as very slow or fast based on how it progresses. 
 
 
 
@@ -20,7 +28,7 @@ In this iteration we opted into more minimal progress bar and spend a lot of tim
 
 
 
-We made browser chrome some more minimal that it became indistinguishable from the content, so we made chrome fade-in  when you'd reach for it.
+We made browser chrome more minimal, so it became indistinguishable from the content. We made chrome fade-in when you'd reach for it.
 
 
 
@@ -34,13 +42,17 @@ New tab button was added to the right bottom corner overlaying the content. And 
 
 ![image-20200201163828316](image-20200201163828316.png)
 
-Clicking address bar transitions you UI to the edit mode.
+
+
+Clicking the site title-bar transitioned it to the editable mode. Input field could be used for entering address, search query or browser command _(everything action hotkey had associated command that you could have invoked)_
+
+
 
 ![image-20200201163719434](image-20200201163719434.png)
 
 
 
-Tabs were revealed on [3D touch][], when switching between tabs with `control tab` or via little hamburger menu button in the top right corner.
+Tabs were revealed on [3D touch][], when switching between tabs with `control tab` or via a hamburger button in the top right corner.
 
 
 

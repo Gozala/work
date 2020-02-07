@@ -4,7 +4,7 @@ I have been exploring an idea of **progressive [peer-to-peer][p2p] web applicati
 
 ### Access Point
 
-General idea is to have a web site that acts as an **access point** to the [p2p][] network. This site can be static, as its primary job will be installation of a [service_worker][], that will represent a peer _(corresponding to the active user agent a.k.a browser)_ in the [p2p](https://en.wikipedia.org/wiki/Peer-to-peer ) network.
+General idea is to have a web site that acts as an **access point** to the [p2p][] network. This site can be static, as its primary job will be installation of a [service_worker][], that will represent a peer _(corresponding to the active user agent a.k.a browser)_ in the [p2p][p2p] network.
 
 This service worker will provide a [message channel][]  based interface to PPWAs for accessing / publishing data of the [p2p][] network. It is worth pointing out that this way PPWAs will be able to publish data even offline _(which will replicate once peer is reconnects)_ and also access data from network that peer has available in the local cache.
 
@@ -14,15 +14,15 @@ Service worker can use [origin](https://developer.mozilla.org/en-US/docs/Glossar
 
 ### Native Application
 
-Native application can be a system service that can use all the capabilities of the underlying OS for p2p networking. Additionally it will include a local [web socket][] or [HTTP](https://en.wikipedia.org/wiki/Hypertext_Transfer_Protocol ) server to accept connections from an access point.
+Native application can be a system service that can use all the capabilities of the underlying OS for p2p networking. Additionally it will include a local [web socket][] or [HTTP][] server to accept connections from an access point.
 
 Loopback addresses like `127.0.0.1` and `::1` are considered [Potentially Trustworthy][] and therefor connections to them from [secure contexts][] is allowed. That is to say that access point site can be served from `https` URL but still be able to connect to the native application.
 
-As of this writing sadly Chrome is only browser that works as expected. In Firefox [fetch][] request works from the document context but not from the service worker. Web socket connections also do not work  _(Tracked by [Bug 1376309](https://bugzilla.mozilla.org/show_bug.cgi?id=1376309 ))_. Safari does not seems to treat loopback addresses as potentially trustworthy.
+As of this writing sadly Chrome is only browser that works as expected. In Firefox [fetch][] request works from the document context but not from the service worker. Web socket connections also do not work  _(Tracked by [Bug 1376309][])_. Safari does not seems to treat loopback addresses as potentially trustworthy.
 
-As [explained by Let's Encrypt](https://letsencrypt.org/docs/certificates-for-localhost/ ) there is no good way for native application to serve over HTTPS. Only viable alternative I think is to generate a private key and self-signed certificate in the native application and add it to the locally trusted roots of the system _(do not know how to do later programmatically)_.
+As [explained by Let's Encrypt][certificates-for-localhost] there is no good way for native application to serve over HTTPS. Only viable alternative I think is to generate a private key and self-signed certificate in the native application and add it to the locally trusted roots of the system _(do not know how to do later programmatically)_.
 
-> It appears that [dropbox][] desktop application exposes extra capabilities to it's website via web socket server on `127.0.0.1`. It also uses [flash][] based work around on Firefox  & I'd guess Safari.
+_It appears that [dropbox][] desktop application exposes extra capabilities to it's website via web socket server on `127.0.0.1`. It also uses [flash][] based work around on Firefox  & I'd guess Safari._
 
 ### Progressive [peer-to-peer][p2p] web applications
 
@@ -53,3 +53,7 @@ I think it also might be interesting to explore access point as an account. That
 [service worker]:https://developer.mozilla.org/en-US/docs/Web/API/Service_Worker_API
 [pushpin]:https://inkandswitch.github.io/pushpin/
 [pixelpusher]:https://medium.com/@pvh/pixelpusher-real-time-peer-to-peer-collaboration-with-react-7c7bc8ecbf74
+[HTTP]:https://en.wikipedia.org/wiki/Hypertext_Transfer_Protocol
+[Bug 1376309]:https://bugzilla.mozilla.org/show_bug.cgi?id=1376309
+[certificates-for-localhost]:https://letsencrypt.org/docs/certificates-for-localhost/
+

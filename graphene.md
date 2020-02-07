@@ -1,6 +1,6 @@
 # Graphene
 
-In the early days of the project we developed a concept of a web runtime that was designed to be thinnest possible layer for the web. Runtime that you could pass a URL to an HTML and it would load (and cache) it as it's user interface. 
+In the early days of the project we developed a concept of a web runtime, designed to be thinnest possible layer for the web. Runtime would take URL to an HTML, would load (and cache) it as it's user interface. 
 
 
 
@@ -8,11 +8,11 @@ In the early days of the project we developed a concept of a web runtime that wa
 
 
 
-Empowering users to (re)shape their User Agent was the vision. But it also supercharged browser concept development and we kept it even as we switched web engine from [gecko][] to [servo][]. This also meant that deploying update was just `git push` away (as demonstrated in video below) and applying update did not required restarts in fact all even tabs were not reloaded.
+Empowering users to (re)shape their User Agent was the vision. But it also supercharged browser concept development and we kept it even as we switched web engine from [gecko][] to [servo][]. This also meant that deploying update was just `git push` away (as demonstrated in video below) and applying update did not require restarts, in fact even tabs were not reloaded.
 
 
 
-<video autoplay="true" loop="true" controls src="browser-update.mp4"></video>
+<video autoplay loop controls mute src="browser-update.mp4" />
 
 
 

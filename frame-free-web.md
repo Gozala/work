@@ -6,7 +6,7 @@ Web should be able to art-direct the experience. We explored ways to give the wi
 
 
 
-<video autoplay="true" loop="true" controls src="./frameless-ui.mp4" type="video/mp4" />
+<video autoplay loop controls muted="true" src="./frameless-ui.mp4" />
 
 <center>Little demo showing blending chrome & task switching</center>
 
