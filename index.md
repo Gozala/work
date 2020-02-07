@@ -40,10 +40,7 @@ Inspired by developments of IPFS, Dat, SSB protocols I have [drafted a concept][
 
 ## User Interface
 
-Reimagining medium for the web, that is not just a client application a.k.a web browser. The True User Agent had been recurring objective of the small team at Mozilla that I had an opportunity to be a part of.
-
-
-~~User interface for the new generation web engine [Servo][], fit for the future and adequate for volumes of information that conventional browsers were failing to manage, was the goal of the [browser.html](./browserhtml) project. Empowered by [user research][] we have exploring several concepts.~~
+Reimagining medium for the web, The True User Agent (and not a client acting on servers behalf) had been an objective of the three people [browser.html](./browserhtml) team at Mozilla. Empowered by [user research][], we have developed several concept browsers to create a user interface for the new generation web engine [Servo][].
 
 #### Frame free web
 
