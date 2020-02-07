@@ -30,7 +30,7 @@ Identifying gaps of the web platform and filling those in Firefox to bring those
 
 #### Lunet
 
-Enabling symmetric systems but within the constraints of existing web platform was goal of [Lunet](./lunet) project. It (ab)used range of web capabilities _([ServiceWorkers][], [Sandboxed iframe][sandoxed-iframe] and [Content Origin Policies][])_ to create a sandboxed web runtime in which applications work offline, operate on user data and are unable to track / silo users. 
+The goal of [Lunet](./lunet) project was enabling symmetric systems but within the constraints of existing web platform. It (ab)used range of web capabilities _([ServiceWorkers][], [Sandboxed iframe][sandoxed-iframe] and [Content Origin Policies][])_ to create a sandboxed web runtime in which applications work offline, operate on user data and are unable to track / silo users. 
 
 It also opportunistically leveraged companion native application to use capabilities unavailable in web platform, proposing [progressive peer-to-peer web application (PPWA)](./ppwa "Progressive peer-to-peer web applications (PPWA)") architecture. [Read full story](./lunet)
 
@@ -43,7 +43,7 @@ Inspired by developments of IPFS, Dat, SSB protocols I have [drafted a concept][
 Reimagining medium for the web, that is not just a client application a.k.a web browser. The True User Agent had been recurring objective of the small team at Mozilla that I had an opportunity to be a part of.
 
 
-User interface for the new generation web engine [Servo][], fit for the future and adequate for volumes of information that conventional browsers were failing to manage, was the goal of the [browser.html](./browserhtml) project. Empowered by [user research][] we have exploring several concepts.
+~~User interface for the new generation web engine [Servo][], fit for the future and adequate for volumes of information that conventional browsers were failing to manage, was the goal of the [browser.html](./browserhtml) project. Empowered by [user research][] we have exploring several concepts.~~
 
 #### Frame free web
 

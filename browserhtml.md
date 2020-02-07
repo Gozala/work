@@ -1,6 +1,6 @@
 # Browser.html
 
-This was an ambitious project at Mozilla, a attempt to design a **True User Agent** for the next generation web engine [Servo][]. [User research][] clearly indicated that tabs, bookmarks, history were inadequate solutions for the web that has grown from days of linked documents to an operating system in disguise.
+This was an ambitious project at Mozilla, an attempt to design a **True User Agent** for the next generation web engine [Servo][]. [User research][] clearly indicated that tabs, bookmarks, history were inadequate solutions for the web that has grown from days of linked documents to an operating system in disguise.
 
 
 

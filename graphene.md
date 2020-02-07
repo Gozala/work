@@ -12,7 +12,7 @@ Empowering users to (re)shape their User Agent was the vision. But it also super
 
 
 
-<video autoplay="true" loop="true" src="browser-update.mp4"></video>
+<video autoplay="true" loop="true" controls src="browser-update.mp4"></video>
 
 
 
