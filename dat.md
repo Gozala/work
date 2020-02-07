@@ -16,10 +16,10 @@ The [dat-webext][] also works in [Cliqz][] browser.
 
 
 
-[@sammacbeth]:https://github.com/cliqz/cliqz-concept-browser/commits?author=sammacbethcli "Sam Macbeth"
+[@sammacbeth]:https://github.com/sammacbeth "Sam Macbeth"
+
 [Cliqz]: https://cliqz.com/ "Cliqz browser with built-in search engine"
 [Mozilla reference browser]:https://github.com/mozilla-mobile/reference-browser/ "A full-featured browser reference implementation using Mozilla Android Components"
-
 [libdweb]:https://github.com/mozilla/libdweb "Experimental Firefox extension APIs for P2P"
 
 [Beaker Browser]:https://beakerbrowser.com/ "Experimental browser fo the peer-to-peer Web"
