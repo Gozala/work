@@ -162,6 +162,8 @@ mark .md-meta { color: rgb(0, 0, 0); opacity: 0.3 !important; }
   --text-color: #333333;
   --link-color: #463f5c;
   --highlighted-text-color: yellow;
+  --line-color: #7a7a7a;
+  --quoted-text-color: #555;
   --header-color: #272727;
   --hr-border: 1px solid lightgray;
 
@@ -218,6 +220,9 @@ mark .md-meta { color: rgb(0, 0, 0); opacity: 0.3 !important; }
     --side-bar-bg-color: #2e3033;
     --text-color: #b8bfc6;
     --link-color: #a9b2d1;
+    --line-color: #474d54;
+    --quoted-text-color: #9da2a6;
+
     --header-color: #dedede;
     --highlighted-text-color: #bf7a8f;
     --hr-border: 1px solid #555;
@@ -521,6 +526,22 @@ a:focus {
   outline: thin dotted;
 }
 
+blockquote {
+  padding-left: 1.33em;
+  font-style: italic;
+  border-left: 2px solid var(--line-color);
+  color: var(--quoted-text-color);
+}
+
+blockquote footer {
+  font-size: 0.85rem;
+  font-style: normal;
+  background-color: var(--side-bar-bg-color);
+  border-color: transparent;
+}
+
+/* Typora specific */
+
 #write {
   padding-top: 2rem;
 }
@@ -793,6 +814,6 @@ a:focus {
 </style>
 </head>
 <body class='typora-export' >
-<div  id='write'  class = 'is-mac'><h1><a name="webtorrent-concept-browser" class="md-header-anchor"></a><span>WebTorrent concept browser</span></h1><p><a href='https://github.com/tom-james-watson' target='_blank' title='Tom Watson'><span>@tom-james-watson</span></a><span>  implemented a concept distributed web browser powered by torrents. Instead of the traditional client/server architecture, websites are published and loaded via torrents. </span><a href='https://github.com/tom-james-watson/wtp-ext' target='_blank' title='Proof-of-concept distributed web powered by WebTorrents'><span>wtp-ext</span></a><span> web extension uses </span><a href='./libdweb'><span>libdweb</span></a><span> to add protocol </span><code>wtp://</code><span> protocol support to the Firefox. </span></p><p><img src="c1QSZWU-20200130145316547.png" referrerpolicy="no-referrer" alt="https://github.com/tom-james-watson/wtp-ext &quot;WebTorrent Browser Concept&quot;"></p><p>&nbsp;</p><center>Site loaded (from torrent) in Firefox</center></div>
+<div  id='write'  class = 'is-mac'><h1><a name="webtorrent-concept-browser" class="md-header-anchor"></a><span>WebTorrent concept browser</span></h1><p><a href='https://github.com/tom-james-watson' target='_blank' title='Tom Watson'><span>@tom-james-watson</span></a><span>  implemented a concept distributed web browser powered by torrents. Instead of the traditional client/server architecture, websites are published and loaded via torrents. </span><a href='https://github.com/tom-james-watson/wtp-ext' target='_blank' title='Proof-of-concept distributed web powered by WebTorrents'><span>wtp-ext</span></a><span> web extension uses </span><a href='./libdweb'><span>libdweb</span></a><span> to add </span><code>wtp://</code><span> protocol support to the Firefox. </span></p><p><img src="c1QSZWU-20200130145316547.png" referrerpolicy="no-referrer" alt="https://github.com/tom-james-watson/wtp-ext &quot;WebTorrent Browser Concept&quot;"></p><p>&nbsp;</p><center>Site loaded (from torrent) in Firefox</center></div>
 </body>
 </html>

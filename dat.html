@@ -162,6 +162,8 @@ mark .md-meta { color: rgb(0, 0, 0); opacity: 0.3 !important; }
   --text-color: #333333;
   --link-color: #463f5c;
   --highlighted-text-color: yellow;
+  --line-color: #7a7a7a;
+  --quoted-text-color: #555;
   --header-color: #272727;
   --hr-border: 1px solid lightgray;
 
@@ -218,6 +220,9 @@ mark .md-meta { color: rgb(0, 0, 0); opacity: 0.3 !important; }
     --side-bar-bg-color: #2e3033;
     --text-color: #b8bfc6;
     --link-color: #a9b2d1;
+    --line-color: #474d54;
+    --quoted-text-color: #9da2a6;
+
     --header-color: #dedede;
     --highlighted-text-color: #bf7a8f;
     --hr-border: 1px solid #555;
@@ -521,6 +526,22 @@ a:focus {
   outline: thin dotted;
 }
 
+blockquote {
+  padding-left: 1.33em;
+  font-style: italic;
+  border-left: 2px solid var(--line-color);
+  color: var(--quoted-text-color);
+}
+
+blockquote footer {
+  font-size: 0.85rem;
+  font-style: normal;
+  background-color: var(--side-bar-bg-color);
+  border-color: transparent;
+}
+
+/* Typora specific */
+
 #write {
   padding-top: 2rem;
 }
@@ -793,6 +814,6 @@ a:focus {
 </style>
 </head>
 <body class='typora-export' >
-<div  id='write'  class = 'is-mac'><h1><a name="dat-protocol-support-in-firefox" class="md-header-anchor"></a><span>Dat protocol support in Firefox</span></h1><p><a href='https://github.com/cliqz/cliqz-concept-browser/commits?author=sammacbethcli' target='_blank' title='Sam Macbeth'><span>@sammacbeth</span></a><span> combined </span><a href='./libdweb'><span>libdweb</span></a><span> with </span><a href='https://github.com/random-access-storage/random-access-idb-mutable-file' target='_blank'><span>random-access-idb-mutable-file</span></a><span> and few </span><a href='https://github.com/libdweb' target='_blank'><span>libdweb adapters</span></a><span> to get </span><a href='https://github.com/datproject/dat-node' target='_blank'><span>dat implementation</span></a><span> running in Firefox web extension context. This </span><a href='https://sammacbeth.eu/blog/2019/05/12/dat-for-firefox-2.html' target='_blank'><span>brought </span><code>dat://</code><span> protocol support</span></a><span> into Firefox through </span><a href='https://github.com/cliqz-oss/dat-webext' target='_blank'><span>dat-webext</span></a><span> web extension. Which also provides </span>[<span>Beaker Browser</span>][]<span> </span><a href='https://beakerbrowser.com/docs/' target='_blank'><span>APIs</span></a><span> for the interoperability.</span></p><p>&nbsp;</p><p><img src="dat-protocol.png" referrerpolicy="no-referrer" alt="dat-protocol-in-firefox &quot;Dat Firefox add-on compatible with beaker&quot;"></p><center>Dat site loaded in Firefox</center><p><span>The </span><a href='https://github.com/cliqz-oss/dat-webext' target='_blank'><span>dat-webext</span></a><span> also works in </span><a href='https://cliqz.com/' target='_blank' title='Cliqz browser with built-in search engine'><span>Cliqz</span></a><span> browser.</span></p><p><img src="EK80aJdX0AEmpbT.jpeg" referrerpolicy="no-referrer" alt="Image"></p><center>Dat site loaded in Cliqz</center><p>&nbsp;</p><p>&nbsp;</p></div>
+<div  id='write'  class = 'is-mac'><h1><a name="dat-protocol-support-in-firefox" class="md-header-anchor"></a><span>Dat protocol support in Firefox</span></h1><p><a href='https://github.com/cliqz/cliqz-concept-browser/commits?author=sammacbethcli' target='_blank' title='Sam Macbeth'><span>@sammacbeth</span></a><span> combined </span><a href='./libdweb'><span>libdweb</span></a><span> with </span><a href='https://github.com/random-access-storage/random-access-idb-mutable-file' target='_blank'><span>random-access-idb-mutable-file</span></a><span> and few </span><a href='https://github.com/libdweb' target='_blank'><span>libdweb adapters</span></a><span> to get </span><a href='https://github.com/datproject/dat-node' target='_blank'><span>dat implementation</span></a><span> running in Firefox web extension context. This </span><a href='https://sammacbeth.eu/blog/2019/05/12/dat-for-firefox-2.html' target='_blank'><span>brought </span><code>dat://</code><span> protocol support</span></a><span> into Firefox through </span><a href='https://github.com/cliqz-oss/dat-webext' target='_blank'><span>dat-webext</span></a><span> web extension. Which also provides </span><a href='https://beakerbrowser.com/' target='_blank' title='Experimental browser fo the peer-to-peer Web'><span>Beaker Browser</span></a><span> </span><a href='https://beakerbrowser.com/docs/' target='_blank'><span>APIs</span></a><span> for the interoperability.</span></p><p>&nbsp;</p><p><img src="dat-protocol.png" referrerpolicy="no-referrer" alt="dat-protocol-in-firefox &quot;Dat Firefox add-on compatible with beaker&quot;"></p><center>Dat site loaded in Firefox</center><p><span>The </span><a href='https://github.com/cliqz-oss/dat-webext' target='_blank'><span>dat-webext</span></a><span> also works in </span><a href='https://cliqz.com/' target='_blank' title='Cliqz browser with built-in search engine'><span>Cliqz</span></a><span> browser.</span></p><p><img src="EK80aJdX0AEmpbT.jpeg" referrerpolicy="no-referrer" alt="Image"></p><center>Dat site loaded in Cliqz</center><p>&nbsp;</p><p>&nbsp;</p></div>
 </body>
 </html>

@@ -30,4 +30,5 @@ The [dat-webext][] also works in [Cliqz][] browser.
 [beaker docs]:https://beakerbrowser.com/docs/
 [dat-for-firefox-2]:https://sammacbeth.eu/blog/2019/05/12/dat-for-firefox-2.html
 [dat-webext]:https://github.com/cliqz-oss/dat-webext
+[Beaker Browser]:https://beakerbrowser.com
 
