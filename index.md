@@ -9,7 +9,7 @@ title: Irakli Gozalishvili
     <a class="nickname" href="https://github.com/gozala" target="_blank">gozala</a>
   </p>
 </div>
-Experienced software engineer with particular interest in [local-first software principles][local-first], [peer to peer][p2p] technologies and the end user programing _(slightly biased for [functional paradigm][functional])_.
+Senior software engineer with particular interest in [local-first software principles][local-first], [peer to peer][p2p] technologies and the end user programing _(slightly biased for [functional paradigm][functional])_.
 
 [Add me to your address book](./gozala.vcf "My Virtual Contact File")
 
@@ -17,7 +17,7 @@ Experienced software engineer with particular interest in [local-first software 
 
 ## Local First
 
-Asymmetry of traditional server/client architectures creates a power disbalance. Power is exercised by trapping users data for profit. P2P/Distributed/Decentralized technologies have a symmetric architecture (every peer is both server and client) and that leads to a different data ownership model. I devoted last years of my career at Mozilla enabling such technologies.  
+Asymmetry of traditional server/client architectures creates a power disbalance. Power is exercised by trapping user's data for profit. P2P/Distributed/Decentralized technologies have a symmetric architecture (every peer is both server and client) and that leads to a different data ownership model. I devoted last years of my career at Mozilla enabling such technologies.  
 
 #### Libdweb
 
