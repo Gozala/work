@@ -9,7 +9,7 @@ title: Irakli Gozalishvili
     <a class="nickname" href="https://github.com/gozala" target="_blank">gozala</a>
   </p>
 </div>
-Senior research engineer with particular interest in [local-first software principles][local-first], [peer to peer][p2p] technologies and the end user programing _(slightly biased for [functional paradigm][functional])_.
+Senior research engineer with particular interest in [local-first software principles][local-first], [peer to peer][p2p] technologies and the [end-user programming][] _(slightly biased for [functional paradigm][functional])_.
 
 [Add me to your address book](./gozala.vcf "My Virtual Contact File")
 
@@ -25,7 +25,7 @@ Identifying gaps of the web platform and filling those in Firefox to bring those
 
 - [IPFS Protocol support in Firefox](./ipfs).
 - [Dat protocol support for Firefox](./dat) (Compatible with [Beaker][] browser) and [Cliqz][]. 
-- [Cliqz contept mobile browser](./dat-mobile) with Dat protocol support.
+- [Cliqz concept mobile browser](./dat-mobile) with Dat protocol support.
 - [WebTorrent concept browser](./wtp)
 
 #### Lunet
@@ -146,4 +146,4 @@ This project replaced [TomTom Home][tomtom-home] desktop application _(Primarily
 [trails]:https://medium.freecodecamp.org/lossless-web-navigation-with-trails-9cd48c0abb56
 [spacial-ui]: https://medium.com/free-code-camp/lossless-web-navigation-spatial-model-37f83438201d
 [ipdf]:https://github.com/gozala/ipdf/
-
+[end-user programming]:https://www.inkandswitch.com/end-user-programming.html

@@ -1,4 +1,4 @@
-# Cliqz Contept Browser
+# Cliqz Concept Browser
 
 [@sammacbeth][] combined [Mozilla reference browser][] with [libdweb](./libdweb) and other [Cliqz][] features to create [full featured mobile web browser][cliqz-concept-browser] with built-in `dat://` protocol support, similar to [Beaker Browser][].
 
