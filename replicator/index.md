@@ -11,7 +11,7 @@ date: 2021-02-05
 
 ![intro](intro.png)
 
-Replicator *does not have cells*. Instead you can [label][js label] expressions and their results will be rendered inline below. This way content of the notebook is all valid JS *(yes it is legal to label expressions)* and there is no need UI controls to fiddle with.
+Replicator *does not have cells*. Instead you can [label][js label] expressions and their results will be rendered inline below. This way content of the notebook is all valid JS (yes it is legal to label expressions). There is no UI controls to fiddle with or keyboard shortcuts to remember.
 
 ![labels](labels.png)
 
@@ -23,30 +23,30 @@ Tool is written as a collection of static files *(HTML, JS, CSS)*. This enables 
 > ipfs add --quieter --recursive replicator
 > ```
 
-Replicator also operates JS-IPFS node *(more about this in a bit)*, which it can use to pick its own internals. Example below shows capturing its Content Identifier ([CID][]) from own location, and using it to read own content under `./data/code.js` path. 
+Replicator also operates JS-IPFS node *(more about this in a bit)*, which it can use to pick its own internals. Picture below shows capturing own Content Identifier ([CID][]) from the location, and use of IPFS to read `./data/code.js` path from within it.
 
 ![self-inspection](self-inspection.png)
 
-When tool loads, it reads contents from the same `./data/code.js` path and loads it into the live coding environment. After making some changes and pressing red save button, it adds code to the  [IPFS][] and swaps page location from [`QmZS…Sy6y`](https://ipfs.io/ipfs/QmZSguVAsb1JynLrvSds6pmwpyeJq28t7PdLnhSfx1Sy6y) to a new replica at [`Qmco…phb1`](https://ipfs.io/ipfs/QmcoqByzFYXHVs779kuJtjRrZ1FmcoCSeL9ws6hS7Pphb1/)
+When tool loads, it reads contents from (that same) `./data/code.js` path and loads it into the live coding environment. After making some changes and pressing red save button, it adds code to the  [IPFS][] and swaps page location from [`QmZS…Sy6y`](https://ipfs.io/ipfs/QmZSguVAsb1JynLrvSds6pmwpyeJq28t7PdLnhSfx1Sy6y) to a new replica at [`Qmco…phb1`](https://ipfs.io/ipfs/QmcoqByzFYXHVs779kuJtjRrZ1FmcoCSeL9ws6hS7Pphb1/)
 
-![save](save.png)Comparing underlying [Merkle DAG][]s of replicas reveals that two they only differ in `data` link *(2nd from the top)*. That is because when you click save, replicator saves code as a `code.js` file wrapped in a directory and adds it to [IPFS][]. Then it saves a copy of an own root node with `data` link swapped, pointing that new content. Due to the deduplication enabled by content addressing all replicas will end up sharing all of the replicator code 🎉
+![save](save.png)Comparing underlying [Merkle DAG][]s of replicas reveals that two only differ in `data` link *(2nd from the top)*. That is because when you click save, replicator saves code as a `code.js` file wrapped in a directory and adds it to [IPFS][]. Then it saves a copy of an own root node with `data` link swapped, pointing that new content. Due to the deduplication enabled by content addressing all replicas will end up sharing all of the replicator code 🎉
 
 ![dag-diff](dag-diff.png) 
 
-Replicator environments supports (native) JS modules, which means you can load and use them. 
+Replicator supports (native) JS modules, which means you can import them. 
 
-> In fact all of the replicator code is loaded as unbundled raw JS modules and I have to attest that free of complicated toolchains JS is as fan as it used back in old days!
+> In fact all of the replicator code is loaded as unbundled raw JS modules. I have to attest that, free of complicated toolchains, JS is, as fan, as it used to back in old days!
 >
 
 Screenshot shows importing slightly altered version of [@observablehq/stdlib][] from IPFS to render some markdown.
 
 ![module imports](import.png)
 
-Putting all the pieces together replicator is live coding environment in browser, where you can explore some ideas and share them as forked replicas using URLs. Code you type is a valid JS file on an IPFS and therefor replicas can import code from one another. No package management needs and it's all content hash addressed.
+All together replicator is live coding environment. You can explore ideas and share them as forked replicas with others. Code you type is valid JS file on IPFS and therefor replicas can import code from one another. No package management needs and it's all content hash addressed.
 
 ![export](export.png) 
 
-Replicator uses a self forking trick to save what you have typed! I will reveal a secret, I have wrote that feature, interactively, in a replica which has not had that feature yet ♻️ Now how meta is that ?!
+Replicator uses a self forking trick to save what you have typed! In fact, I wrote that feature, interactively, in a replica that did not had that feature yet ♻️ Now how meta is that ?!
 
 ![reactive](reactive.png)
 
