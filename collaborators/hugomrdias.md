@@ -10,7 +10,7 @@ title: Hugo Dias
 
 >  If you are looking for some talent, this might be your chance to steal Hugo!
 >
-> [Add him to your contacts](./hugomrdias.vcf "Virtual Contact File (VCF)")
+> [Add Hugo to your contacts](./hugomrdias.vcf "Virtual Contact File (VCF)")
 
 I had the privilege of working with Hugo Dias during our time at [Protocol Labs][], where we collaborated on both the [JS-IPFS][] and [web3.storage][] initiatives. Our collaboration reached its pinnacle with the implementation and  design of [UCAN][]-based protocols, and I am grateful for  the opportunity to have worked with Hugo on this project.
 
@@ -27,7 +27,10 @@ It was an honor to work with Hugo and I am grateful for the opportunity to have 
 
 
 [gravatar]: https://www.gravatar.com/avatar/992f349a609dd4e723e281c175369c74
+
 [Protocol Labs]: https://protocol.ai/
+
 [JS-IPFS]: https://github.com/ipfs/js-ipfs
 [web3.storage]: https://web3.storage/
+
 [UCAN]: https://github.com/ucan-wg/spec/
