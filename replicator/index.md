@@ -36,7 +36,6 @@ When tool loads, it reads contents from (that same) `./data/code.js` path and lo
 Replicator supports (native) JS modules, which means you can import them. 
 
 > In fact all of the replicator code is loaded as unbundled raw JS modules. I have to attest that, free of complicated toolchains, JS is, as fan, as it used to back in old days!
->
 
 Screenshot shows importing slightly altered version of [@observablehq/stdlib][] from IPFS to render some markdown.
 
