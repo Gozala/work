@@ -15,7 +15,7 @@ Dialog DB is designed with [local-first][] principles, aiming to operate without
 
 As so many good things were invented in 70s and is a classic data structure for databases. 
 
-They are not [history-independent][] though as the tree layout depends significantly on the insertion order. Typical implementations perform rebalancing which also causes  [boundary shifts][]. This makes them impractical for Dialog DB.
+They are not [history independent][] though as the tree layout depends significantly on the insertion order. Typical implementations perform rebalancing which also causes  [boundary shifts][]. This makes them impractical for Dialog DB.
 
 ### Merkle Search Trees (MST)
 
@@ -776,6 +776,7 @@ The occasional large node at a namespace boundary is preferable to frequent boun
 
 [history independent]:#History_Independence
 [history independence]:#History_Independence
+
 [boundary shifts]:#Understanding_Boundary_Shifts
 [B-Tree]:https://en.wikipedia.org/wiki/B-tree
 [local-first]: https://www.inkandswitch.com/essay/local-first/
