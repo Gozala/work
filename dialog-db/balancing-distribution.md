@@ -1,9 +1,9 @@
 ---
-title: Tuning the Tradeoff Between Boundary Stability and Size Uniformity
+title: Improving Size Variance
 date: 2025-07-09
 ---
 
-#  Tuning the Tradeoff Between Boundary Stability and Size Uniformity
+#  Improving Size Variance
 
 Dialog DB is designed with [local-first][] principles, aiming to operate without traditional servers by building on content-addressed storage. Like Git, local replicas can cooperate through remote content-addressed stores. To achieve efficient replication in such settings, dialog uses search tree algorithm that is [history independent][] and resilient to [boundary shifts][]. Narrowing [size variance][] is currently under exploration and subject of this article.
 
@@ -59,181 +59,718 @@ Dolt evolved from idea of original [Prolly Tree][] optimizing it for SQL databas
 
 Dialog's search tree implementation is based on the [G-tree][] algorithm. It slightly diverges from paper by pushing entries into leaf layer and in that regard is more similar to [Okra][] in terms of layout, however it or other [prolly tree][] we don't need to detect boundaries in the upper levels of the tree by node hashes we can do it by comparing rank of leftmost leaf (of that node) to tree height is not same it is a boundary.
 
-### Characteristics of Search Trees
+### Search Tree Characteristics
 
-It appears that there are following key characteristics that impact query, update and replication performance and are in tension with each other.
+It appears that there are following key characteristics that impact query, update and replication performance and are in tension with each other - You can guarantee two out of three, or compromise some to a degree to make improve guarantees on third
 
-- strong [history Independence][]
-- resilience to [boundary shifts][]
-- narrow [size variance][]
+```mermaid
+---
+config:
+  radar:
+    height: 300
+    axisScaleFactor: 1
+    curveTension: 0.05
+  themeVariables:
+    cScale0: "#4DABF7"
+    cScale1: "#099268"
+    cScale2: "#AE3EC9"
+    graticuleColor: "#9398B0"
+    textColor: "#9398B0"
+    titleColor: "#9398B0"
+    radar:
+      axisStrokeWidth: 1
+      curveOpacity: 0.3
+      graticuleOpacity: 0.05
+      axisColor: "#9398B0"
 
-It seems that you can guarantee two out of three, or compromise some to a degree to make some guarantees on third. Current hypothesis is that optimal balance can be achieved for Dialog by compromising some on first two and improve third.
+---
+radar-beta
+  axis  h["History Independence"], b["Boundary Shift Resilience"], s["Narrow Size Variance"]
+  curve Okra{100, 100, 10}
+  curve Dolt{100, 45, 70}
 
-### History Independence
+  max 100
+  min 0
+  ticks 3
+```
+
+#### History Independence
 
 > In a history independent data structure, nothing can be learned from the memory representation of the data structure except for what is available from the abstract data structure. 
 
-More simply if the structure of the tree is independent of insertion order it is [history independent](https://dl.acm.org/doi/10.1007/s00453-004-1140-z). This property is very important if you want to synchronize uncoordinated changes to the tree. That is because it allows finding differences between two replicas without having to explore all paths. If insertion order could load to different tree structures we would not even be able to tell if two replicas are the same scanning the whole thing. 
+More simply if the structure of the tree is independent of insertion order it is [history independent](https://dl.acm.org/doi/10.1007/s00453-004-1140-z). This property is very important if you want to synchronize uncoordinated changes to the tree. That is because it allows finding differences between two replicas without having to explore all paths. If insertion order could load to different tree structures we would not even be able to tell if two replicas are the same requiring us to scan seemingly different subtrees. 
 
-For a while I was thinking about _history Independence_ as a binary property but that seems little close minded. Better way to think about is in terms of how much drift from perfect can be tolerated - how strongly history Independent structure is. It is important to remember why we care about this property and I would argue that if we can weaken 
+>  For a while I was thinking about _history Independence_ as a binary property but that seems little close minded. Better way to think about is in terms of how much drift from perfect can be tolerated - how strongly history Independent structure is. It is important to remember why we care about this property. For example It is possible to weaken the property while retaining or in some cases improve ability to identify differences efficiently by allowing bit of drift
 
- so we can identify differences efficiently, however there are scenarios where we can retain ability to check differences  
-
- and in certain cases you may actually improve on this by allowing bit of drift. 
-
-### Boundary Shifts
+#### Boundary Shifts
 
 Stronger the resilience to boundary shifts the smaller the impact of a random edit. To make it more concrete it would a lot simpler that mentioned algorithms to delimit nodes into sibling groups by a fixed sizes and build tree that way this would give us perfectly [history independent][] tree and perfectly narrow [size variance][] but absolutely terrible resilience to boundary shifts because inserting an entry would update everything on the left of it. On the other hand [Okra][] has perfect [history independence][] a high resilient to [boundary shifts][] allowing to make very little changes
 
 > Making a random change in our key/value store with 16 million entries only requires changing a little less than 7 merkle tree nodes on average.
 
-It's properly obvious why high resilience is relevant generally, but it is even more important in distributed settings where shifts would lead to redundant network roundtrips and wasted storage.
+It's probably obvious why high resilience is relevant generally, but it is even more important in distributed settings where shifts would lead to redundant network roundtrips and cache invalidations.
 
-### Size Variance
+#### Size Variance
 
-I'm deliberately vague about what size means it could be [branching factor](https://en.wikipedia.org/wiki/Branching_factor) which corresponds to the size of sibling groups or it could be byte size of the serialized node and often there is high correspondence between the two. High variance size makes performance characteristics unpredictable as some nodes may end up huge and others tiny. 
+I'm deliberately vague about what size means it could be [branching factor](https://en.wikipedia.org/wiki/Branching_factor) which corresponds to the size of sibling groups or it could be byte size of the serialized node, often there is a high correspondence between the two. High variance in size makes performance characteristics unpredictable as some nodes may end up huge and others tiny. 
 
-All the mentioned search tree algorithms other than [B-Tree][] compromise this property in order to gain first two. In theory because boundaries are detected from cryptographic hashes by basing boundaries on probability it is expected to get a balanced distribution, in practice there are no guarantees and results can vary.
+All the mentioned search tree algorithms other than [B-Tree][] compromise to various degrees on this property in order to gain first two. In theory because boundaries are detected from cryptographic hashes based on probability it is expected to get a balanced distribution, in practice there are no guarantees and results can vary.
 
-> In Dialog while nodes tend to be **on average** of desired density (child count), variance is very high and median and average are far apart.
+> In Dialog while nodes tend to be **on average** of desired density (child count), variance is high and median is far apart from the average. This is something we would like to address by recalibrating tradeoffs.
 
-### Calibrating Compromises
+### Calibrating Tradeoffs
 
-Authors of Dolt came up with an interesting solution of increasing probability with the increase of size. I'm going to describe idea conceptually which is not what Dolt does but I find it simpler to explain and understand - We decide if node is  **boundary** of the sibling group by counting leading `0`s in the node hash in binary encoding. For desired branching factor we need `n`, but as we get closer to desired branching factor we decrease `n` to increase probability of finding a **boundary**. 
+#### Strengthening Size Variance
 
-While this is guaranteed to provide a narrower [size variance][] it must either weaken [history independence][] or resilience to [boundary shifts][].
+Authors of Dolt came up with a clever yet simple solution - Correlate probability with size.
+
+> I'm going to describe idea conceptually to build an intuition, for accurate description see [Dolt's article](https://www.dolthub.com/blog/2022-06-27-prolly-chunker/)
+
+Let's say we want to divide nodes into sibling groups lead by a **boundary** node. We determined that probabilistically to get on **average**  `Q` sized groups boundary node needs to have hash that starts with `n` number of `0`. Instead of keeping `n` static we can choose to decrease it as our group nears desired size e.g. once we have `Q/2` siblings in the group we can decrement `n` which would improve probability of finding a boundary because now we need less `0` to occur. 
+
+Now we if we find boundary before reaching pressure zone we have a strong / permanent boundary. If we find it in the pressure zone we had to compromise a little no our requirements so we end up with **weak**er boundary. 
+
+> We just have two zones to for simplicity, but imagine many zones instead each with weaker requirements (less `0`s) producing weaker boundary.
+
+#### Weakening Boundary Shift Resistance
+
+Strengthening [size variance][] requires weakening resilience to [boundary shifts][]. To illustrate, let's assume we have a tree where we have one weak boundary and one permanent boundary.
+
+> Yellow nodes are weak boundaries, and purple are permanent boundaries
+
+```mermaid
+---
+config:
+  theme: 'base'
+  themeVariables:
+    primaryColor: '#9398B0'
+    primaryTextColor: '#fff'
+    primaryBorderColor: '#9398B0'
+    secondaryBorderColor: '#9398B0'
+    lineColor: '#9398B0'
+    secondaryColor: '#000000'
+    secondaryTextColor: '#000000'
+    tertiaryColor: '#fff'
+---
+stateDiagram
+		classDef weak fill:#FFC034,stroke-width:0;
+		classDef strong fill:#E599F7,stroke-width:0;
+		classDef index fill:#4DABF7,stroke-width:0;
+		classDef new fill:#099268,stroke-width:0;
+		classDef delete fill:#4DABF7,stroke-width:0,opacity: 0.3, border:0;
+
+    a_: a..g
+    h_: h..n
+    p_: p..t
+    
+    [*] --> a_:::index
+    [*] --> h_:::index
+    [*] --> p_:::index
+
+    a_ --> a
+    a_ --> b
+    a_ --> d
+    a_ --> e
+    a_ --> f
+    a_ --> g
+    
+    h_ --> h:::weak
+    h_ --> i
+    h_ --> j
+    h_ --> k
+    h_ --> m
+    h_ --> n
+    
+    p_ --> p:::strong
+    p_ --> q
+    p_ --> r
+    p_ --> t
+    
+```
+
+Consider scenario where new `c` node is inserted into a search tree. It will cause us to reassess sibling group for boundaries and since group was past `Q/2` weakened requirements caused `f` to become a boundary. 
+
+```mermaid
+---
+config:
+  theme: 'base'
+  themeVariables:
+    primaryColor: '#9398B0'
+    primaryTextColor: '#fff'
+    primaryBorderColor: '#9398B0'
+    secondaryBorderColor: '#9398B0'
+    lineColor: '#9398B0'
+    secondaryColor: '#000000'
+    secondaryTextColor: '#000000'
+    tertiaryColor: '#fff'
+---
+stateDiagram
+		classDef weak fill:#FFC034,stroke-width:0;
+		classDef strong fill:#E599F7,stroke-width:0;
+		classDef index fill:#4DABF7,stroke-width:0;
+		classDef new fill:#099268,stroke-width:0;
+		classDef delete fill:#4DABF7,stroke-width:0,opacity: 0.3, border:0;
+
+    a_: a..g
+    h_: h..n
+    p_: p..t
+    
+    [*] --> a_:::index
+    [*] --> h_:::index
+    [*] --> p_:::index
+
+    a_ --> a
+    a_ --> b
+    a_ --> c:::new
+    a_ --> d
+    a_ --> e
+    a_ --> f:::weak
+    a_ --> g
+    
+    h_ --> h:::weak
+    h_ --> i
+    h_ --> j
+    h_ --> k
+    h_ --> m
+    h_ --> n
+    
+    p_ --> p:::strong
+    p_ --> q
+    p_ --> r
+    p_ --> t
+    
+```
+
+As a result we have to shift nodes starting with new boundary `f` into a next group. This in turn places `h` into stronger requirements zone so weak boundary status no longer holds. But now `k` is in the zone with a weaker requirements that it clears and gains boundary status, causing another split.
+
+```mermaid
+---
+config:
+  theme: 'base'
+  themeVariables:
+    primaryColor: '#9398B0'
+    primaryTextColor: '#fff'
+    primaryBorderColor: '#9398B0'
+    secondaryBorderColor: '#9398B0'
+    lineColor: '#9398B0'
+    secondaryColor: '#000000'
+    secondaryTextColor: '#000000'
+    tertiaryColor: '#fff'
+---
+stateDiagram
+		classDef weak fill:#FFC034,stroke-width:0;
+		classDef strong fill:#E599F7,stroke-width:0;
+		classDef index fill:#4DABF7,stroke-width:0;
+		classDef new fill:#099268,stroke-width:0;
+		classDef delete fill:#4DABF7,stroke-width:0,opacity: 0.3, border:0;
+
+    a_: a..g
+    f_: f..n
+    p_: p..t
+    
+    [*] --> a_:::index
+    [*] --> f_:::index
+    [*] --> p_:::index
+
+    a_ --> a
+    a_ --> b
+    a_ --> c
+    a_ --> d
+    a_ --> e
+    
+    f_ --> f:::weak
+    f_ --> g
+    f_ --> h
+    f_ --> i
+    f_ --> j
+    f_ --> k:::weak
+    f_ --> m
+    f_ --> n
+    
+    p_ --> p:::strong
+    p_ --> q
+    p_ --> r
+    p_ --> t
+    
+```
+
+This time however if we shift nodes from new boundary `k` into next group we'd still end up breaking that group at `p` because it is a permanent boundary _(it did not depend on weakened requirements)_ preventing shifts from cascading further in the tree.
+
+```mermaid
+---
+config:
+  theme: 'base'
+  themeVariables:
+    primaryColor: '#9398B0'
+    primaryTextColor: '#fff'
+    primaryBorderColor: '#9398B0'
+    secondaryBorderColor: '#9398B0'
+    lineColor: '#9398B0'
+    secondaryColor: '#000000'
+    secondaryTextColor: '#000000'
+    tertiaryColor: '#fff'
+---
+stateDiagram
+		classDef weak fill:#FFC034,stroke-width:0;
+		classDef strong fill:#E599F7,stroke-width:0;
+		classDef index fill:#4DABF7,stroke-width:0;
+		classDef new fill:#099268,stroke-width:0;
+		classDef delete fill:#4DABF7,stroke-width:0,opacity: 0.3, border:0;
+		
+    a_: a..e
+    f_: f..j
+    p_: p..t
+    k_: k..n
+    
+    [*] --> a_:::index
+    [*] --> f_:::index
+    [*] --> k_:::index
+    [*] --> p_:::index
+    
+
+    a_ --> a
+    a_ --> b
+    a_ --> c
+    a_ --> d
+    a_ --> e
+    
+    
+    f_ --> f:::weak
+    f_ --> g
+    f_ --> h
+    f_ --> i
+    f_ --> j
+    
+    k_ --> k:::weak
+    k_ --> m
+    k_ --> n
+    
+    p_:::index --> p:::strong
+    p_ --> q
+    p_ --> r
+    p_ --> t
+    
+```
+
+Insight here is that weak boundaries depend on extra context like group size to clear the selection requirements, but when context changes they may no longer clear requirements and therefor fail to prevent cascading shifts. Sometimes shifted nodes can be absorbed by the next group and also stop cascading shifts.
+
+Hopefully this demonstrates how improving [size variance][] weakens resilience to [boundary shifts][].
+
+#### Weakening History Independence
+
+We could also strengthen [size variance][] but instead of resilience to [boundary shifts][] we could have weakened [history independence][]. To illustrate this lets start with a same tree as last time except before we had  `f` was inserted
+
+
+
+````mermaid
+---
+config:
+  theme: 'base'
+  themeVariables:
+    primaryColor: '#9398B0'
+    primaryTextColor: '#fff'
+    primaryBorderColor: '#9398B0'
+    secondaryBorderColor: '#9398B0'
+    lineColor: '#9398B0'
+    secondaryColor: '#000000'
+    secondaryTextColor: '#000000'
+    tertiaryColor: '#fff'
+---
+stateDiagram
+		classDef weak fill:#FFC034,stroke-width:0;
+		classDef strong fill:#E599F7,stroke-width:0;
+		classDef index fill:#4DABF7,stroke-width:0;
+		classDef new fill:#099268,stroke-width:0;
+		classDef delete fill:#4DABF7,stroke-width:0,opacity: 0.3, border:0;
+
+    a_: a..g
+    h_: h..n
+    p_: p..t
+    
+    [*] --> a_:::index
+    [*] --> h_:::index
+    [*] --> p_:::index
+
+    a_ --> a
+    a_ --> b
+    a_ --> d
+    a_ --> e
+    a_ --> g
+    
+    h_ --> h:::weak
+    h_ --> i
+    h_ --> j
+    h_ --> k
+    h_ --> m
+    h_ --> n
+    
+    p_ --> p:::strong
+    p_ --> q
+    p_ --> r
+    p_ --> t
+    
+````
+
+Now if we still insert `c` before we insert `f` we will end up with `g` becoming a weak boundary instead. However instead of shifting we will create it's own group.
+
+```mermaid
+---
+config:
+  theme: 'base'
+  themeVariables:
+    primaryColor: '#9398B0'
+    primaryTextColor: '#fff'
+    primaryBorderColor: '#9398B0'
+    secondaryBorderColor: '#9398B0'
+    lineColor: '#9398B0'
+    secondaryColor: '#000000'
+    secondaryTextColor: '#000000'
+    tertiaryColor: '#fff'
+---
+stateDiagram
+		classDef weak fill:#FFC034,stroke-width:0;
+		classDef strong fill:#E599F7,stroke-width:0;
+		classDef index fill:#4DABF7,stroke-width:0;
+		classDef new fill:#099268,stroke-width:0;
+		classDef delete fill:#4DABF7,stroke-width:0,opacity: 0.3, border:0;
+
+    a_: a..e
+    g_: g..
+    h_: h..n
+    p_: p..t
+    
+    [*] --> a_:::index
+    [*] --> g_:::index
+    [*] --> h_:::index
+    [*] --> p_:::index
+
+    a_ --> a
+    a_ --> b
+    a_ --> c:::new
+    a_ --> d
+    a_ --> e
+    
+    g_ --> g:::weak
+    
+    h_ --> h:::weak
+    h_ --> i
+    h_ --> j
+    h_ --> k
+    h_ --> m
+    h_ --> n
+    
+    p_ --> p:::strong
+    p_ --> q
+    p_ --> r
+    p_ --> t
+    
+```
+
+Now if we insert `f` we'll end up with pressure to split again and with another sibling group
+
+```mermaid
+---
+config:
+  theme: 'base'
+  themeVariables:
+    primaryColor: '#9398B0'
+    primaryTextColor: '#fff'
+    primaryBorderColor: '#9398B0'
+    secondaryBorderColor: '#9398B0'
+    lineColor: '#9398B0'
+    secondaryColor: '#000000'
+    secondaryTextColor: '#000000'
+    tertiaryColor: '#fff'
+---
+stateDiagram
+		classDef weak fill:#FFC034,stroke-width:0;
+		classDef strong fill:#E599F7,stroke-width:0;
+		classDef index fill:#4DABF7,stroke-width:0;
+		classDef new fill:#099268,stroke-width:0;
+		classDef delete fill:#4DABF7,stroke-width:0,opacity: 0.3, border:0;
+
+    a_: a..e
+    f_: f..
+    g_: g..
+    h_: h..n
+    p_: p..t
+    
+    [*] --> a_:::index
+    [*] --> f_:::index
+    [*] --> g_:::index
+    [*] --> h_:::index
+    [*] --> p_:::index
+
+    a_ --> a
+    a_ --> b
+    a_ --> c:::new
+    a_ --> d
+    a_ --> e
+    
+    f_ --> f:::weak
+    g_ --> g:::weak
+    
+    h_ --> h:::weak
+    h_ --> i
+    h_ --> j
+    h_ --> k
+    h_ --> m
+    h_ --> n
+    
+    p_ --> p:::strong
+    p_ --> q
+    p_ --> r
+    p_ --> t
+    
+```
+
+If have switched insertion order and did `f` then `c` we would have with a different tree instead 
+
+```mermaid
+---
+config:
+  theme: 'base'
+  themeVariables:
+    primaryColor: '#9398B0'
+    primaryTextColor: '#fff'
+    primaryBorderColor: '#9398B0'
+    secondaryBorderColor: '#9398B0'
+    lineColor: '#9398B0'
+    secondaryColor: '#000000'
+    secondaryTextColor: '#000000'
+    tertiaryColor: '#fff'
+---
+stateDiagram
+		classDef weak fill:#FFC034,stroke-width:0;
+		classDef strong fill:#E599F7,stroke-width:0;
+		classDef index fill:#4DABF7,stroke-width:0;
+		classDef new fill:#099268,stroke-width:0;
+		classDef delete fill:#4DABF7,stroke-width:0,opacity: 0.3, border:0;
+
+    a_: a..e
+    f_: f..g
+    h_: h..n
+    p_: p..t
+    
+    [*] --> a_:::index
+    [*] --> f_:::index
+    [*] --> h_:::index
+    [*] --> p_:::index
+
+    a_ --> a
+    a_ --> b
+    a_ --> c:::new
+    a_ --> d
+    a_ --> e
+    
+    f_ --> f:::weak
+    f_ --> g
+    
+    h_ --> h:::weak
+    h_ --> i
+    h_ --> j
+    h_ --> k
+    h_ --> m
+    h_ --> n
+    
+    p_ --> p:::strong
+    p_ --> q
+    p_ --> r
+    p_ --> t
+    
+```
+
+
+
+
 
 > I do not know which one dolt compromises here, but it must be one or the other, because insertion may split a sibling group at which point split out segment either joins the next group causing potentially cascading [boundary shifts][] or stay independent compromising [history independence][].
 
 It is worth observing that probability distribution adds some resilience to boundary shifts although I don't believe it can't be guaranteed. Same could be said about weakened [history independence][] it gets slightly compromised but over time it in normal circumstances it should chart towards convergence as opposed to divergence although it seems possible to simulate contrary scenario.
 
+#### Considerations
 
+##### Network vs Disk IO
 
-#### Weakening History Independence
+Traditional databases optimize for disk I/O, Dialog DB optimizes for network IO where latency dominates. This fundamental difference has profound implications for tree design:
 
-It is important to remember why we care about [history independence][] - It allows us to quickly identify differences, which in turn we need to be able to reconcile changes across replicas. If we are able to make a compromise in way that does not weaken our ability to identify difference we'll have a bargain deal as we'll be able to strengthen some of the other two properties.
+**Disk I/O characteristics:**
 
-Lets consider [Datomic][] inspired design where our search tree in addition to (index) tree also has novelty buffer, all inserts will accumulate in the buffer until it's reaches capacity and when it does all entries from novelty gets flushed into the (index) tree
+- Sequential reads are fast
+- Random access has high latency
+- Optimal node sizes align with disk blocks
+- Deep trees are acceptable if they minimize seeks
 
-```ts
-interface Tree<Entry> {
-  novelty: Set<Entry>
-  index: IndexNode<Entry>
-}
+**Network I/O characteristics:**
 
-interface IndexNode<Entry> {
-  children: Node<Entry>[]
-}
+- Each round trip adds significant latency
+- Bandwidth is less of a constraint than latency
+- Tree depth directly impacts response time
 
-interface SegmentNode<Entry> {
-  children: Entry[]
-}
-```
+For Dialog DB, this means:
 
-In such a design we weaken history independence, because if have an entry the novelty another replica would have had different one if insertion occurred there in reverse order. However this design does not weaken our ability to identify differences in practice what we could do instead of comparing index 
+- **Shallow trees are critical**: Each level requires a network round trip. Reducing depth from 4 to 3 levels can improve response times significantly
+- **Larger nodes can be beneficial**: A single 64KB fetch might be faster than four 16KB fetches due to round-trip overhead
+- **Stable boundaries enable caching**: When boundaries shift, cached paths become invalid, triggering additional network requests
+- **Partial replication benefits from locality**: Natural data boundaries improve the efficiency of on-demand fetching
 
-🚧 UNFINISHED FROM HERE ON 🚧
+These constraints suggest that tolerating some size variance to maintain stable, meaningful boundaries may be a better tradeoff than Dolt's tight size control.
 
-### Adjusting boundary detection
+> Dolt's approach represents a pragmatic solution for SQL databases where predictable performance characteristics are crucial. By using a cumulative distribution function (CDF) to dynamically adjust split probability based on current chunk size, they achieve a normal distribution around their target size. This provides excellent variance reduction - essential for consistent query performance in a database context.
 
-It appears that if boundary nodes are determined purely by node content you get high resilience to boundary shifts because single edit can at most affect two adjacent nodes and path leading to them. However it is also possible to end up with a very densely populated nodes. if boundary detection takes into account additional context like sibling group density it becomes possible to make compromise and induce boundary at which point we have to weaken one of the other two guarantees
+#### Leveraging Natural Data Boundaries
 
-#### Compromising History Independence
+For Dialog DB, we're exploring approach inspired by Dolt's, however we'd prefer bit more resilience in boundary shifts at the cost of less narrow variance in size.
 
-If we compromise [history independence][] we may end can end up with trees in which differences can't be easily detected however it's not  
-
-
-
-but also additional context like sibling group sizes or blob size, this property weakens
-
-## Considerations
-
-### Network vs Disk IO
-
-Traditional databases optimize for disk I/O, Dialog DB optimizes for network IO where latency dominates is more relevant. Wasting a round trip on a tiny node hurts far more in this context.
-
-### 
-
-However it does not seem possible to impose low bound  small 
-
-
+```mermaid
+---
+config:
+  radar:
+    height: 300
+    axisScaleFactor: 1
+    curveTension: 0.05
+  themeVariables:
+    cScale0: "#4DABF7"
+    cScale1: "#099268"
+    cScale2: "#AE3EC9"
+    graticuleColor: "#9398B0"
+    textColor: "#9398B0"
+    titleColor: "#9398B0"
+    radar:
+      axisStrokeWidth: 1
+      curveOpacity: 0.3
+      graticuleOpacity: 0.05
+      axisColor: "#9398B0"
 
 ---
+radar-beta
+  axis  h["History Independence"], b["Boundary Shift Resilience"], s["Narrow Size Variance"]
+  curve Okra{100, 100, 10}
+  curve Dolt{100, 45, 70}
+  curve Dialog{100, 70, 45}
 
-In Okra, inserting a node never shifts boundaries - it may split sibling group if inserted node is determined to be a boundary node, but that has no effect on other boundary nodes because it is determined by node content alone. 
-
-> Deleting node can shift boundaries by joining sibling groups, but that is less relevant in Dialog context so we won't worry about it.
-
-However, if boundary nodes are determined not purely by node content but also additional context like sibling group sizes or blob size, this property weakens. 
-
-Consider what happens when capacity constraints influence boundary. A node may be determined as boundary only because sibling group got too large. Later inserting node in the same position can flip boundary status of the previously inserted node
-
->  Previous pressure of large sibling group no longer applies so in new context node is no longer a boundary node.
-
-In this scenario boundary shifts from previously inserted node to a new node. This reduces stability of the tree shape and in pathological cases could lead to cascading effects where boundaries shift across several sibling groups because each group started with a boundary determined by previous group size and not a node content.
-
-> That said, it is worth recognizing that cases where we'd experience cascading effects would also be pathological in implementation where context is not used because reason cascading effect happens when no boundary node exists in the affected sibling groups otherwise they'd be broken up
-
-
-
-
-
-## The Tradeoff: Boundary Stability vs Size Uniformity
-
-There's a tradeoff between boundary stability (resistance to boundary shifts) and size uniformity (consistent blob sizes). Pure content-based boundaries maximize stability but allow wide size variance. Size-based splitting creates uniform chunks but boundaries shift more easily.
-
-My intuition is that this tradeoff matters differently for different node types:
-
-**Index nodes** benefit from boundary stability - We want tighter bounds on child count while still having some boundaries on blob sizes to ensure low-entropy data doesn't go completely out of bounds.
-
-**Segment nodes** pack actual content as their children and number of children can vary widely based on the content implying very low correspondence between child count and blob size. It seems logical that size here would be more important than boundary shifts, although we can't fully ignore boundary shifts or will be prone to cascading shifts.
-
-## A Constraint-Based Approach
-
-Rather than choosing a fixed strategy, we're exploring a constraint-based API that lets different node types express their requirements:
-
-```typescript
-type NodeConfiguration
-  | LimitDensity
-  | LimitCapacity
-  | Limit
-
-type Constraint = { min: UInt, max: UInt, bias?: Uint }
-
-type DensityLimit = {
-  count: Constraint
-  capacity: {min: UInt }
-}
-
-type CapacityLimit = {
-  count: {min: UInt}
-  capacity: Constraint
-}
-
-type Limit = {
-  count: Constraint
-  capacity: Constraint
-}
-
+  max 100
+  min 0
+  ticks 3
 ```
 
-This design acknowledges that different parts of the tree have different needs. Index nodes can prioritize boundary stability while keeping child count reasonable. Segment nodes can focus on blob size while maintaining minimum fanout for efficiency.
+Instead of forming boundaries with size-based heuristics we are considering to leverage the natural structure in our data to identify boundaries more resilient to shifts. Before we dive into details, we need to cover look get som details of how we represent data in search tree
 
-## Striking a Balance
+##### Dialog Search Tree Key Layout
 
-Dialog DB aims to balance these competing concerns so that starting queries from an empty database can be efficient and syncing between replicas minimizes unnecessary blob transfers.
+Keys in Dialog's search tree are comprised of following components:
 
-By making the tradeoff explicit and tunable, we can experiment with different strategies for different workloads. Low-entropy datasets might need tighter size bounds to prevent degenerate cases. High-churn workloads might prefer more stability to reduce sync traffic.
+- Index Identifier
+- Entity Identifier 
+- Attribute Namespace
+- Attribute Name
+- Value Type
+- Value
 
-The constraint-based approach also future-proofs the design. As we learn more about real-world usage patterns, we can refine the boundary detection strategies without changing the fundamental API.
+All keys are prefixed by index identifier component which determines order of the remaining components. 
 
-## Next Steps
+###### Entity Attribute Value (EAV) Index
 
-We haven't yet implemented or proven this approach will solve our distribution problems. But by learning from Okra, G-trees, Dolt, and others who've explored this space, we're developing a framework that acknowledges the tradeoffs rather than seeking a one-size-fits-all solution.
+Index provides efficient access to the *attributes by entity*. It is similar to primary key lookup in relational databases.
 
-The key insight is recognizing that boundary stability and size uniformity exist in tension. Different use cases need different points on that spectrum. By making that choice explicit and tunable, we hope to build a system that works well across diverse workloads while maintaining the properties that make probabilistic B-trees valuable for local-first applications.
+```
+/EAV/Entity/Namespace/Name/Type/Value
+```
 
+###### Attribute Entity Value (AEV) Index
 
+Index provides efficient column-style access for retrieving *entities by attribute*.
+
+```
+/AEV/Namespace/Name/Entity/Type/Value
+```
+
+###### Attribute Entity Value (AEV) Index
+
+ Is used for reverse lookups like navigating relations backwards. 
+
+```
+/VAE/Type/Value/Namespace/Name/Entity
+```
+
+> Given EAV, you can find what the speed of the Pikachu is 
+>
+> ```ts
+> db.select({ the: "pokemon/stat/speed", of: pikachu })
+> ```
+>
+> And with AEV you can also efficiently find all the other Pokémon that have same speed. 
+>
+> ```ts
+> db.select({ the: "pokemon/stat/speed", is: speed })
+> ```
+
+##### Identifying Natural Data Boundaries
+
+The key insight is that _natural boundaries exist in the data_ and given all nodes are sorted by keys when we need to enforce boundaries because large spans of siblings rank same we can choose to split at most natural boundary in the keys space to make it more resilient to shifts.
+
+```
+EAV   ba4...b46q   pokemon name          string     delibird
+EAV   ba4...b46q   pokemon stat/speed    uint       55
+EAV   ba4...b46q   pokemon stat/attack   uint       55
+EAV   ba4...b46q   pokemon type          string     ice/flying
+EAV   ba4...amkh   pokemon name          string     volcanion
+EAV   ba4...amkh   pokemon stat/speed    uint       70
+EAV   ba4...dbiq   todo    title         string     shopping list
+EAV   ba4...dbiq   todo    completed     bool       false
+AEV   pokemon      name    ba4...b46q    string     delibird
+AEV   pokemon      name    ba4...amkh    string     volcanion
+```
+
+Except above shows that splitting at index boundary (EAV vs AEV) would be ideal choice, but if not available splitting by namespace boundaries (pokemon vs todo) would be our next best choice as such splits would provide superior locality for reads and writes. These boundaries are:
+
+1. **Semantically meaningful**: Queries often access data within the same index, namespace
+2. **Naturally stable**: New pokemon data won't shift the todo boundary
+3. **Cache-friendly**: Related data stays together
+
+Our algorithm distinguishes between:
+
+1. **Strict delimiters** - Boundaries determined by geometric distribution from content hashes
+2. **Forced delimiters** - Applied only when nodes reach max capacity, chosen at natural data boundaries
+
+When forced splits are necessary, we **force boundary at node that has most semantically different key from their sibling**. This approach provides:
+
+**Cascade resistance**: Natural data boundaries persist even as data grows. Adding more Pokémon data doesn't affect where the todo boundary occurs.
+
+**Query locality**: Range queries like "all pokemon stats" naturally stay within the same nodes, improving cache efficiency and reducing network requests.
+
+**Write locality**: Batch updates to a namespace are more likely to affect a single node, reducing write amplification.
+
+**Network optimization**: By allowing larger variance in node sizes (e.g. up to 3x of optimal size), we maintain shallower trees while ensuring splits happen at meaningful boundaries.
+
+The fundamental tradeoff compared to Dolt:
+
+- **Dolt**: Size uniformity > Boundary stability (optimized for consistent disk I/O)
+- **Dialog**: Boundary stability > Size uniformity (optimized for network caching and locality)
+
+##### Implementation Approach
+
+The algorithm modifies tree construction to leverage data boundaries:
+
+1. Process nodes normally, respecting natural content-defined boundaries
+2. If a node exceeds capacity:
+   - Identify natural boundary (index/namespace/name changes)
+   - Weight candidates by boundary significance and position
+   - Split at the highest-scoring natural boundary
+3. Continue processing with semantically coherent segments
+
+This maintains content-defined chunking for most boundaries while ensuring forced splits align with data access patterns.
+
+##### Why This Matters
+
+For a passive database with on-demand partial replication:
+
+- **Stable boundaries** reduce cache invalidation
+- **Semantic boundaries** improve prefetch efficiency
+- **Larger node tolerance** reduces tree depth
+- **Natural locality** minimizes network requests for related data
+
+The occasional large node at a namespace boundary is preferable to frequent boundary shifts that scatter related data across multiple network requests.
 
 
 
